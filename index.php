@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FooTube</title>
+    <title>OpenTube</title>
 </head>
-<h1>FooTube</h1>
+<h1>OpenTube</h1>
 <?php
     if ($handle = opendir('videos')) {
         while (false !== ($entry = readdir($handle))) {
