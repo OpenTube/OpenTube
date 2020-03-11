@@ -10,8 +10,9 @@
     if ($handle = opendir('videos')) {
         while (false !== ($entry = readdir($handle))) {
         if ($entry != "." && $entry != "..") {
+            $ext = pathinfo($entry, PATHINFO_EXTENSION);
             echo '<video width="320" height="240" controls>';
-            echo "<source src=\"videos/$entry\" type=\"video/mp4\">";
+            echo "<source src=\"videos/$entry\" type=\"video/$ext\">";
             echo '
                 Your browser does not support the video tag.
                 </video>
