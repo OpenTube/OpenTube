@@ -7,9 +7,9 @@ then
     echo "$procs"
     exit 1
 fi
-if [ ! -d ../FooTube ]
+if [[ ! -d .git ]] || [[ ! -f index.php ]]
 then
-    echo "Error: directory not found '../FooTube'"
+    echo "Error: this is not a OpenTube directory."
     exit 1
 fi
 ${BROWSER:-firefox} "http://localhost:$PORT/index.php" &

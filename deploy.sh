@@ -1,10 +1,10 @@
 #!/bin/bash
 
-if [ ! -d ../FooTube ]
+if [[ ! -d .git ]] || [[ ! -f index.php ]]
 then
-    echo "wrong dir"
+    echo "Error: this is not a OpenTube directory."
     exit 1
 fi
 
-scp -r ./* chiller@149.202.127.134:/var/www/html/FooTube
+scp -r ./* chiller@149.202.127.134:/var/www/html/OpenTube
 
