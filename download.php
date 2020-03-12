@@ -42,6 +42,10 @@
     }
     function download_video($hash) {
         define('R_YT_HASH', '/^[a-zA-Z0-9_-]+$/');
+        define('R_YT_URL', '/^http.*you.*watch\?v=([a-zA-Z0-9_-]+)/');
+        if (preg_match(R_YT_URL, $url, $matches)) {
+            $url = $matches[1];
+        }
         if(!preg_match(R_YT_HASH, $hash)) {
             echo "<br>ERROR INVALID YOUTUBE HASH<br>";
             return;
@@ -55,3 +59,4 @@
         download_video($_POST["yt-hash"]);
     }
 ?>
+
