@@ -8,17 +8,15 @@ fi
 
 if [ "$1" == "--help" ] || [ "$1" == "-h" ]
 then
-    echo "usage: $(basename "$0") [target] [host]"
-    echo "description: will scp all contents to host/target"
-    echo "example:    $(basename "$0") foo root@localhost:/var/www"
-    echo 'results in: scp -r ./* "root@localhost:/var/www/foo"'
+    echo "usage: $(basename "$0") [host]"
+    echo "example:    $(basename "$0") root@localhost:/var/www/html/OpenTube"
     exit 0
 fi
 
-target="${1:-OpenTube}"
-host="${2:-chiller@149.202.127.134:/var/www/html}"
+host="${1:-chiller@149.202.127.134:/var/www/html/OpenTube}"
 
-echo "[*] uploading to '$host/$target' ..."
-
-scp -r ./* "$host/$target"
+echo "[*] uploading to '$host' ..."
+cmd="scp -r ./* $host"
+echo "[*] $cmd"
+eval "$cmd"
 
