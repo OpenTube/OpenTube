@@ -16,7 +16,14 @@
 <?php
     function html_video_viewer($video, $saved) {
         $ext = pathinfo($video, PATHINFO_EXTENSION);
-        echo "<h1>$video</h1>";
+        $name = pathinfo($video, PATHINFO_FILENAME);
+        echo "<h1>";
+        if($saved) {
+            echo "<a href=\"video.php?t=$video\">$name</a>";
+        } else {
+            echo "$name";
+        }
+        echo "</h1>";
         echo '<video width="320" height="240" controls>';
         echo "<source src=\"" . (($saved) ? "saved_" : "") . "videos/$video\" type=\"video/$ext\">";
         echo '
