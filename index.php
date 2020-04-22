@@ -23,8 +23,8 @@
         ';
     }
     function html_video_buttons($video) {
-        echo "<br><a href='/edit.php/?delete=$video'>DELETE</a><br>";
-        echo "<br><a href='/edit.php/?save=$video'>SAVE</a><br>";
+        echo "<br><a href=\"edit.php?delete=$video\">DELETE</a><br>";
+        echo "<br><a href=\"edit.php?save=$video\">SAVE</a><br>";
     }
     function html_video($video, $saved) {
         html_video_viewer($video, $saved);
