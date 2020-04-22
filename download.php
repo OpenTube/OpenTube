@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenTube</title>
+</head>
+<body>
+    <h1><a href="index.php">OpenTube</a></h1>
 <?php
     function disable_ob() {
         // Turn off output buffering
@@ -62,4 +71,5 @@
         download_video($_POST["yt-hash"]);
     }
 ?>
-
+</body>
+</html>

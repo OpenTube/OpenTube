@@ -6,7 +6,7 @@
     <title>OpenTube</title>
 </head>
 <body>
-    <h1>OpenTube</h1>
+    <h1><a href="index.php">OpenTube</a></h1>
     <!--
     <form action="download.php" method="post">
     YouTube hash: <input type="text" name="yt-hash"><br>

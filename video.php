@@ -6,6 +6,7 @@
     <title>OpenTube</title>
 </head>
 <body>
+    <h1><a href="index.php">OpenTube</a></h1>
 <?php
     function html_video_viewer($video_path) {
         $ext = pathinfo($video_path, PATHINFO_EXTENSION);
