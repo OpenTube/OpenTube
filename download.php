@@ -48,12 +48,15 @@
         }
         if(!preg_match(R_YT_HASH, $hash)) {
             echo "<br>ERROR INVALID YOUTUBE HASH<br>";
+            echo '<br><a href="index.php">Okay</a><br>';
             return;
         }
-        echo "<br>downloading '$hash' ...<br>";
-        verbose_exec("mkdir -p videos && cd videos && /usr/local/bin/youtube-dl -f mp4 https://www.youtube.com/watch?v=$hash");
-        echo "<br>finished '$hash' ...<br>";
+        echo "<br>DOWNLOAD NOT SUPPORTED CURRENTLY<br>";
         echo '<br><a href="index.php">Okay</a><br>';
+        // echo "<br>downloading '$hash' ...<br>";
+        // verbose_exec("mkdir -p videos && cd videos && /usr/local/bin/youtube-dl -f mp4 https://www.youtube.com/watch?v=$hash");
+        // echo "<br>finished '$hash' ...<br>";
+        // echo '<br><a href="index.php">Okay</a><br>';
     }
     if (isset($_POST["yt-hash"])) {
         download_video($_POST["yt-hash"]);

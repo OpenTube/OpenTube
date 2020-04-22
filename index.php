@@ -7,10 +7,12 @@
 </head>
 <body>
     <h1>OpenTube</h1>
+    <!--
     <form action="download.php" method="post">
     YouTube hash: <input type="text" name="yt-hash"><br>
     <input type="submit">
     </form>
+    -->
 <?php
     function html_video_viewer($video, $saved) {
         $ext = pathinfo($video, PATHINFO_EXTENSION);
