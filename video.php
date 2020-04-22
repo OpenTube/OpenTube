@@ -23,13 +23,15 @@
         if(!preg_match(R_TITLE, $title)) {
             echo "<br>ERROR INVALID VIDEO TITLE '$title'<br>";
             echo '<br><a href="index.php">Okay</a><br>';
-            return;
+            http_response_code(404);
+            die();
         }
         $path = "saved_videos/$title";
         if(!is_file($path)) {
             echo "<br>ERROR VIDEO NOT FOUND<br>";
             echo '<br><a href="index.php">Okay</a><br>';
-            return;
+            http_response_code(404);
+            die();
         }
         html_video_viewer($path);
     }
