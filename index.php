@@ -14,7 +14,18 @@
     <input type="submit">
     </form>
     -->
+    <form action="index.php" method="get">
+        sarch: <input type="text" name="s"><br>
+        <input type="submit">
+    </form>
 <?php
+    function str_contains($haystack, $needle) {
+        $needlePos = strpos(
+            strtolower($haystack),
+            strtolower($needle)
+        );
+        return ($needlePos === false ? false : ($needlePos+1));
+    }
     function html_video_viewer($video, $saved) {
         $ext = pathinfo($video, PATHINFO_EXTENSION);
         $name = pathinfo($video, PATHINFO_FILENAME);
@@ -45,10 +56,13 @@
     function list_video_dir($dir, $saved) {
         $page = isset($_GET['p']) ? (int)$_GET['p'] : 0;
         $per_page = isset($_GET['pp']) ? (int)$_GET['pp'] : 5;
+        $search = isset($_GET['s']) ? $_GET['s'] : false;
         $total_videos = 0;
         if ($handle = opendir($dir)) {
             while (false !== ($entry = readdir($handle))) {
                 if ($entry == "." || $entry == "..")
+                    continue;
+                if ($search && !str_contains(pathinfo($entry, PATHINFO_FILENAME), $search))
                     continue;
                 $total_videos++;
                 if($total_videos > $page * $per_page && $total_videos <= $page * $per_page + $per_page)
@@ -63,7 +77,7 @@
         }
         echo "<br>total videos: $total_videos<br>";
         for($i = 0; $i <= $int_pages; $i++)
-            echo "<a href=\"index.php?p=$i&pp=$per_page\">$i</a> | ";
+            echo "<a href=\"index.php?p=$i&pp=$per_page&s=$search\">$i</a> | ";
     }
     list_video_dir('videos', false);
     list_video_dir('saved_videos', true);
