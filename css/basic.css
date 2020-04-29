@@ -1,3 +1,47 @@
 html, body {
     background-color: rgb(240, 230, 240);
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+
+.pages {
+    border: 2px solid black;
+    border-radius: 3px;
+    background-color: rgba(236, 116, 240, 0.5);
+    font-size: 15px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.pages a {
+    border: 2px solid black;
+    border-radius: 3px;
+    padding: 0px 20px 0px 20px;
+    background-color: rgba(230, 87, 182, 0.5);
+}
+
+a.current-page {
+    border: 4px solid black;
+    background-color: rgba(206, 78, 163, 0.5);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.content {
+    flex-grow: 1;
+}
+
+footer {
+    padding: 10px;
+    background-color: rgb(116, 116, 116);
+    color: rgb(219, 219, 219);
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

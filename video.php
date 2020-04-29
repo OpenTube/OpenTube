@@ -7,6 +7,7 @@
     <title>OpenTube</title>
 </head>
 <body>
+    <div class="content">
     <h1><a href="index.php">OpenTube</a></h1>
 <?php
     function html_video_viewer($video_path) {
@@ -44,5 +45,12 @@
         echo '<br><a href="index.php">Okay</a><br>';
     }
 ?>
+    </div> <!-- .content -->
+    <div>
+        <script src="js/main.js"></script>
+        <footer>
+            <a href="https://github.com/OpenTube/OpenTube">OpenTube</a> - todo add some cool lawyer sentence here
+        </footer>
+    </div>
 </body>
 </html>

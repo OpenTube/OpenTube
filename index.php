@@ -7,6 +7,7 @@
     <title>OpenTube</title>
 </head>
 <body>
+    <div class="content">
     <h1><a href="index.php">OpenTube</a></h1>
     <!--
     <form action="download.php" method="post">
@@ -77,17 +78,25 @@
         if ($float_pages <= $int_pages) {
             $int_pages = $int_pages - 1;
         }
-        echo "<br>total videos: $total_videos<br>";
+        echo '<div class="pages">';
         for($i = 0; $i <= $int_pages; $i++) {
             if ($page === $i)
-                echo "<strong><a href=\"index.php?p=$i&pp=$per_page&s=$search\">$i</a></strong> | ";
+                echo "<a class=\"current-page\" href=\"index.php?p=$i&pp=$per_page&s=$search\">$i</a>";
             else
-                echo "<a href=\"index.php?p=$i&pp=$per_page&s=$search\">$i</a> | ";
+                echo "<a href=\"index.php?p=$i&pp=$per_page&s=$search\">$i</a>";
         }
+        echo '</div>';
+        echo "<span>[total: $total_videos]</span>";
     }
     list_video_dir('videos', false);
     list_video_dir('saved_videos', true);
 ?>
-    <script src="js/main.js"></script>
+    </div> <!-- .content -->
+    <div>
+        <script src="js/main.js"></script>
+        <footer>
+            <a href="https://github.com/OpenTube/OpenTube">OpenTube</a> - todo add some cool lawyer sentence here
+        </footer>
+    </div>
 </body>
 </html>

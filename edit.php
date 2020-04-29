@@ -7,6 +7,7 @@
     <title>OpenTube</title>
 </head>
 <body>
+    <div class="content">
     <h1><a href="index.php">OpenTube</a></h1>
 <?php
     function save_video($video) {
@@ -38,5 +39,12 @@
         save_video($_GET['save']);
     }
 ?>
+    </div> <!-- .content -->
+    <div>
+        <script src="js/main.js"></script>
+        <footer>
+            <a href="https://github.com/OpenTube/OpenTube">OpenTube</a> - todo add some cool lawyer sentence here
+        </footer>
+    </div>
 </body>
 </html>
