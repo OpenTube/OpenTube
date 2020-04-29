@@ -35,8 +35,10 @@
         } else {
             echo "$name";
         }
+        // keep extension since extension matters also for urls
+        $thumbnail = "thumbnails/$name.$ext.gif";
         echo "</h1>";
-        echo '<video width="320" height="240" controls>';
+        echo "<video width=\"320\" height=\"240\" controls poster=\"$thumbnail\">";
         echo "<source src=\"" . (($saved) ? "saved_" : "") . "videos/$video\" type=\"video/$ext\">";
         echo '
             Your browser does not support the video tag.
