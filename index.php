@@ -36,7 +36,7 @@
             echo "$name";
         }
         // keep extension since extension matters also for urls
-        $thumbnail = "thumbnails/$name.$ext.gif";
+        $thumbnail = "thumbnails/$name.$ext.png";
         echo "</h1>";
         echo "<video width=\"320\" height=\"240\" controls poster=\"$thumbnail\">";
         echo "<source src=\"" . (($saved) ? "saved_" : "") . "videos/$video\" type=\"video/$ext\">";
@@ -88,5 +88,6 @@
     list_video_dir('videos', false);
     list_video_dir('saved_videos', true);
 ?>
+    <script src="js/main.js"></script>
 </body>
 </html>

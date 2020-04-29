@@ -29,5 +29,6 @@ upload_cmd *.htm
 upload_cmd *.css
 upload_cmd *.php
 upload_cmd *.sh
+upload_cmd *.js
 # upload_cmd .git
 
