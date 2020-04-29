@@ -15,7 +15,7 @@
     </form>
     -->
     <form action="index.php" method="get">
-        sarch: <input type="text" name="s"><br>
+        sarch: <input type="text" name="s" value="<?php echo $_GET['s']; ?>"><br>
         <input type="submit">
     </form>
 <?php
