@@ -76,8 +76,12 @@
             $int_pages = $int_pages - 1;
         }
         echo "<br>total videos: $total_videos<br>";
-        for($i = 0; $i <= $int_pages; $i++)
-            echo "<a href=\"index.php?p=$i&pp=$per_page&s=$search\">$i</a> | ";
+        for($i = 0; $i <= $int_pages; $i++) {
+            if ($page === $i)
+                echo "<strong><a href=\"index.php?p=$i&pp=$per_page&s=$search\">$i</a></strong> | ";
+            else
+                echo "<a href=\"index.php?p=$i&pp=$per_page&s=$search\">$i</a> | ";
+        }
     }
     list_video_dir('videos', false);
     list_video_dir('saved_videos', true);
