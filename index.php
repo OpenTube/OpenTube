@@ -73,19 +73,30 @@
             }
             closedir($handle);
         }
+        // TODO: BIG REFACTOR PLEASE OR JUST USE A DATABASE FINALLY
+        if ($total_videos == 0)
+            return;
+        echo '<div class="pages">';
         $float_pages = $total_videos / $per_page;
         $int_pages = (int)$float_pages;
         if ($float_pages <= $int_pages) {
             $int_pages = $int_pages - 1;
         }
-        echo '<div class="pages">';
-        for($i = 0; $i <= $int_pages; $i++) {
+        $MAX_PAGES = 2; // in both directions
+        $start_page = $page - $MAX_PAGES;
+        $end_page = min($int_pages, $page + $MAX_PAGES);
+        if ($start_page < 0) {
+            $end_page -= $start_page;
+            $start_page = 0;
+        }
+        for($i = $start_page; $i <= $end_page; $i++) {
             if ($page === $i)
-                echo "<a class=\"current-page\" href=\"index.php?p=$i&pp=$per_page&s=$search\">$i</a>";
+            echo "<a class=\"current-page\" href=\"index.php?p=$i&pp=$per_page&s=$search\">$i</a>";
             else
-                echo "<a href=\"index.php?p=$i&pp=$per_page&s=$search\">$i</a>";
+            echo "<a href=\"index.php?p=$i&pp=$per_page&s=$search\">$i</a>";
         }
         echo '</div>';
+        echo "start: $start_page end: $end_page";
         echo "<span>[total: $total_videos]</span>";
     }
     list_video_dir('videos', false);
