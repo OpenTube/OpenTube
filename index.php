@@ -108,7 +108,7 @@
     <div>
         <script src="js/main.js"></script>
         <footer>
-            <a href="https://github.com/OpenTube/OpenTube">OpenTube</a> - todo add some cool lawyer sentence here
+            <a href="https://github.com/OpenTube/OpenTube">OpenTube</a> - PUBLIC DOMAIN (Unlicense)
         </footer>
     </div>
 </body>
