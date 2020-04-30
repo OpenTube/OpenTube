@@ -31,7 +31,7 @@ cd ..
 ./test.sh
 ```
 
-# license
+### license
 
 The whole code base and all images are licensed under public domain.
 All graphics were handcrafted by [ChillerDragon](https://github.com/ChillerDragon) same goes for the code.
