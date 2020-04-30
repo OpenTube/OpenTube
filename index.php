@@ -88,6 +88,8 @@
         if ($start_page < 0) {
             $end_page -= $start_page;
             $start_page = 0;
+            if ($end_page > $int_pages)
+                $end_page = $int_pages;
         }
         for($i = $start_page; $i <= $end_page; $i++) {
             if ($page === $i)
@@ -96,8 +98,8 @@
             echo "<a href=\"index.php?p=$i&pp=$per_page&s=$search\">$i</a>";
         }
         echo '</div>';
-        echo "start: $start_page end: $end_page";
-        echo "<span>[total: $total_videos]</span>";
+        // echo "start: $start_page end: $end_page";
+        echo "<span>[videos: $total_videos pages: $int_pages]</span>";
     }
     list_video_dir('videos', false);
     list_video_dir('saved_videos', true);
