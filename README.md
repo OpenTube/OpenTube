@@ -13,7 +13,20 @@ chmod a+rx /usr/local/bin/youtube-dl
 ```
 git clone https://github.com/OpenTube/OpenTube
 cd OpenTube
-mkdir videos
+
+# generate video folder and download sample video
+mkdir -p saved_videos && cd saved_videos
 youtube-dl -f mp4 https://www.youtube.com/watch?v=2r1D-sXTVTo
+
+# generate thumbnails using ffmpeg
+# has to be run after adding new videos
+# there are two types of thumbnails:
+# - static png from the middle of the video
+# - animated gif showing the first seconds of the video
+cd ..
+./thumbnails.sh
+
+# start test php server and open browser
+# not production ready just for testing
 ./test.sh
 ```
