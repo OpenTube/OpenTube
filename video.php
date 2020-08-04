@@ -30,6 +30,9 @@
             die();
         }
         $path = "saved_videos/$title";
+        if(isset($_GET["unlisted"]) && $_GET["unlisted"] == "true") {
+            $path = "unlisted_videos/$title";
+        }
         if(!is_file($path)) {
             echo "<br>ERROR VIDEO NOT FOUND<br>";
             echo '<br><a href="index.php">Okay</a><br>';
