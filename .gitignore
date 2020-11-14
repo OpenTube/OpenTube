@@ -8,4 +8,5 @@ vendor/
 node_modules/
 saved_videos/
 unlisted_videos/
+css/custom.css
 
