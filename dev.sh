@@ -52,13 +52,41 @@ function run_test() {
     fi
 }
 
+function test_lint_php() {
+    local f
+    mkdir -p test
+    for f in ./*.php
+    do
+        if ! php -l "$f"
+        then
+            exit 1
+        fi
+    done
+}
+
+function test_run_php() {
+    local f
+    local html
+    mkdir -p test
+    for f in ./*.php
+    do
+        html="test/$(basename "$f" .php).html"
+        if ! php "$f" > "$html"
+        then
+            exit 1
+        fi
+    done
+}
+
 function run_tests() {
     run_test "shellcheck" \
         'find . -name "*.sh" -print0 | xargs --null shellcheck'
     run_test "javascript standard" \
         "npx standard"
     run_test_verbose "php lint" \
-        "find . -name '*.php' -exec php -l -d display_errors=on {} \;"
+        "test_lint_php"
+    run_test_verbose "run php" \
+        "test_run_php"
 }
 
 if [ "$#" == "0" ] || [ "$1" == "--help" ] || [ "$1" == "-h" ]
