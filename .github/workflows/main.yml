@@ -22,4 +22,4 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: sudo apt-get update && sudo apt-get install shellcheck php -y
     - run: npm install
-    - run: ./test.sh test
+    - run: ./dev.sh test
