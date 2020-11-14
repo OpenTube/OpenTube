@@ -1,0 +1,20 @@
+{
+  "name": "opentube",
+  "version": "1.0.0",
+  "description": "",
+  "main": "js/main.js",
+  "devDependencies": {
+    "standard": "*"
+  },
+  "scripts": {
+    "test": "npx standard"
+  },
+  "standard": {
+    "globals": [
+      "Image"
+    ]
+  },
+  "keywords": [],
+  "author": "ChillerDragon",
+  "license": "Unlicense"
+}

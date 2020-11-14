@@ -4,3 +4,6 @@
 *.gif
 thumbnails
 tags
+vendor/
+node_modules/
+

@@ -1,0 +1,13 @@
+{
+    "name": "chillerdragon/opentube",
+    "description": "Basic video streaming platform. Simple php website to watch videos.",
+    "type": "project",
+    "license": "Unlicense",
+    "authors": [
+        {
+            "name": "ChillerDragon",
+            "email": "chillerdragon@gmail.com"
+        }
+    ],
+    "require": {}
+}
