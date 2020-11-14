@@ -35,6 +35,10 @@ not production ready just for testing
 
         ./dev.sh test
 
+### Custom csss
+
+You can write your own css at ``css/custom.css`` if you want to avoid git conflicts.
+
 ### License
 
 The whole code base and all images are licensed under public domain.
