@@ -1,5 +1,5 @@
 html, body {
-    background-color: rgb(240, 230, 240);
+    background-color: rgb(231, 231, 231);
     font-family: Arial, Helvetica, sans-serif;
     margin: 0px;
     padding: 0px;
@@ -36,10 +36,35 @@ body {
     flex-grow: 1;
 }
 
+.container {
+    border-radius: 3px;
+    background-color: white;
+    box-shadow: 3px 2px 3px rgba(0, 0, 0, 0.5);
+    margin: 10px;
+    padding: 5px;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.video {
+    width: 60vw;
+}
+
+video {
+    margin-top: -20px;
+}
+
+.navigation {
+    width: 100%;
+}
+
 footer {
     padding: 10px;
-    background-color: rgb(116, 116, 116);
-    color: rgb(219, 219, 219);
+    background-color: rgb(185, 185, 185);
+    color: rgb(243, 243, 243);
     height: 50px;
     display: flex;
     justify-content: center;

@@ -6,6 +6,7 @@
 <body>
     <div class="content">
     <h1><a href="index.php">OpenTube</a></h1>
+    <div class="container">
     <!--
     <form action="download.php" method="post">
     YouTube hash: <input type="text" name="yt-hash"><br>
@@ -29,7 +30,7 @@
     function html_video_viewer($video, $saved) {
         $ext = pathinfo($video, PATHINFO_EXTENSION);
         $name = pathinfo($video, PATHINFO_FILENAME);
-        echo "<h1>";
+        echo '<div class="video"><h3>';
         if($saved) {
             echo "<a href=\"video.php?t=$video\">$name</a>";
         } else {
@@ -37,12 +38,12 @@
         }
         // keep extension since extension matters also for urls
         $thumbnail = "thumbnails/$name.$ext.png";
-        echo "</h1>";
+        echo "</h3>";
         echo "<video width=\"320\" height=\"240\" controls poster=\"$thumbnail\">";
         echo "<source src=\"" . (($saved) ? "saved_" : "") . "videos/$video\" type=\"video/$ext\">";
         echo '
             Your browser does not support the video tag.
-            </video>
+            </video></div> <!-- video --->
         ';
     }
     function html_video_buttons($video) {
@@ -75,7 +76,7 @@
         // TODO: BIG REFACTOR PLEASE OR JUST USE A DATABASE FINALLY
         if ($total_videos == 0)
             return;
-        echo '<div class="pages">';
+        echo '<div class="navigation"><div class="pages">';
         $float_pages = $total_videos / $per_page;
         $int_pages = (int)$float_pages;
         if ($float_pages <= $int_pages) {
@@ -103,6 +104,8 @@
     list_video_dir('videos', false);
     list_video_dir('saved_videos', true);
 ?>
+    </div> <!-- .navigation -->
+    </div> <!-- .container -->
     </div> <!-- .content -->
     <div>
         <script src="js/main.js"></script>
