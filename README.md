@@ -24,16 +24,16 @@ there are two types of thumbnails:
 - animated gif showing the first seconds of the video
 
         cd ..
-        ./thumbnails.sh
+        ./scripts/thumbnails.sh
 
 start test php server and open browser
 not production ready just for testing
 
-        ./test.sh run
+        ./dev.sh run
 
 ### Test
 
-        ./test.sh test
+        ./dev.sh test
 
 ### License
 
