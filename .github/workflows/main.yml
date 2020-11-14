@@ -20,6 +20,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: sudo apt-get update && sudo apt-get install shellcheck php -y
-    - run: npm install
+    - run: sudo apt-get update && sudo apt-get install shellcheck php python3 -y
+    - run: ./dev.sh install
     - run: ./dev.sh test

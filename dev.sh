@@ -1,5 +1,40 @@
 #!/bin/bash
 
+function check_deps() {
+    # shell lint
+    if [ ! -x "$(command -v shellcheck)" ]
+    then
+        echo "Error: you need shellcheck installed"
+        exit 1
+    fi
+    # html lint
+    if [ ! -x "$(command -v html5validator)" ]
+    then
+        if [ ! -x "$(command -v python3)" ]
+        then
+            echo "Error: you need python3 installed"
+            exit 1
+        fi
+        if [ ! -x "$(command -v java)" ]
+        then
+            echo "Error: you need java 8 installed"
+            exit 1
+        fi
+        python3 -m pip install html5validator
+    fi
+}
+
+function install_deps() {
+    check_deps
+    # javascript lint
+    if [ ! -x "$(command -v npm)" ]
+    then
+        echo "Error: you need npm installed"
+        exit 1
+    fi
+    npm install
+}
+
 function run_app() {
     local port=$1
     if pgrep -f php > /dev/null
@@ -87,17 +122,27 @@ function run_tests() {
         "test_lint_php"
     run_test_verbose "run php" \
         "test_run_php"
+    run_test "validate html" \
+        "html5validator --root test/"
 }
 
-if [ "$#" == "0" ] || [ "$1" == "--help" ] || [ "$1" == "-h" ]
-then
-    echo "usage: ./test.sh <test|run [PORT]>"
-    exit 0
-elif [ "$1" == "test" ]
+if [ "$1" == "test" ]
 then
     run_tests
 elif [ "$1" == "run" ]
 then
     run_app "${2:-8888}"
+elif [ "$1" == "install" ]
+then
+   install_deps
+else
+    echo "usage: ./test.sh <test|install|run [PORT]>"
+    echo "  test"
+    echo "    runs tests"
+    echo "  install"
+    echo "    installs test depdencys"
+    echo "  run [PORT]"
+    echo "    runs the opentube web app"
+    exit 0
 fi
 

@@ -33,6 +33,7 @@ not production ready just for testing
 
 ### Test
 
+        ./dev.sh install
         ./dev.sh test
 
 ### Custom csss
