@@ -21,14 +21,12 @@ function run_app() {
 }
 
 function log() {
-    tput bold; printf '['; tput sgr0
-    printf '*'
-    tput bold; printf ']'; tput sgr0
+    printf '\033[1m[\033[0m*\033[1m]\033[0m '
     if [ "$1" == "-n" ]
     then
-        printf " %s" "$2"
+        printf "%s" "$2"
     else
-        echo " $1"
+        echo "$1"
     fi
 }
 
