@@ -19,12 +19,14 @@
         <input type="submit">
     </form>
 <?php
-    function str_contains($haystack, $needle) {
-        $needlePos = strpos(
-            strtolower($haystack),
-            strtolower($needle)
-        );
-        return ($needlePos === false ? false : ($needlePos+1));
+    if (!function_exists('str_contains')) {
+        function str_contains($haystack, $needle) {
+            $needlePos = strpos(
+                strtolower($haystack),
+                strtolower($needle)
+            );
+            return ($needlePos === false ? false : ($needlePos+1));
+        }
     }
     function html_video_viewer($video, $saved) {
         $ext = pathinfo($video, PATHINFO_EXTENSION);
