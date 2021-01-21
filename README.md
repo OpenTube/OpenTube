@@ -36,7 +36,7 @@ not production ready just for testing
         ./dev.sh install
         ./dev.sh test
 
-### Custom csss
+### Custom css
 
 You can write your own css at ``css/custom.css`` if you want to avoid git conflicts.
 
