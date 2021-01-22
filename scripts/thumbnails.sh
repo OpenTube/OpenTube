@@ -9,11 +9,33 @@ then
     exit 1
 fi
 
+arg_force=0
+
+for arg in "$@"
+do
+    if [ "$arg" == "--help" ] || [ "$arg" == "-h" ] || [ "$arg" == "help" ]
+    then
+        echo "usage: $0 [OPTION]"
+        echo "options:"
+        echo "  --force|-f      regenerate existing thumbnails"
+        exit 0
+    elif [ "$arg" == "--force" ] || [ "$arg" == "-f" ]
+    then
+        arg_force=1
+    else
+        echo "invalid argument '$arg' check help for more info"
+        tput bold
+        echo "  $0 --help"
+        tput sgr0
+        exit 1
+    fi
+done
+
 mkdir -p thumbnails
 
 function generate_thumbnail_static() {
-    video_path="$1"
-    png_path="thumbnails/$(basename "$video_path").png"
+    local video_path="$1"
+    local png_path="$2"
     seconds="$(ffprobe \
         -v error \
         -show_entries format=duration \
@@ -35,8 +57,8 @@ function generate_thumbnail_static() {
 }
 
 function generate_thumbnail() {
-    video_path="$1"
-    gif_path="thumbnails/$(basename "$video_path").gif"
+    local video_path="$1"
+    local gif_path="$2"
     ffmpeg \
         -y \
         -i "$video_path" \
@@ -54,7 +76,15 @@ for video in \
     ./saved_videos/*.mp4 \
     ./saved_videos/*.webm
 do
-    generate_thumbnail "$video"
-    generate_thumbnail_static "$video"
+    img="thumbnails/$(basename "$video_path").png"
+    if [ ! -f "$img" ] || [ "$arg_force" == "1" ]
+    then
+        generate_thumbnail "$video" "$img"
+    fi
+    img="thumbnails/$(basename "$video_path").gif"
+    if [ ! -f "$img" ] || [ "$arg_force" == "1" ]
+    then
+        generate_thumbnail_static "$video" "$img"
+    fi
 done
 
