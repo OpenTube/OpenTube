@@ -22,6 +22,14 @@ function check_deps() {
         fi
         python3 -m pip install html5validator
     fi
+    # youtube-dl
+    if [ ! -x "$(command -v youtube-dl)" ]
+    then
+        echo "Error: you need youtube-dl installed"
+        echo "  curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl"
+        echo "  chmod a+rx /usr/local/bin/youtube-dl"
+        exit 1
+    fi
 }
 
 function install_deps() {
@@ -57,6 +65,16 @@ function run_app() {
 
 function log() {
     printf '\033[1m[\033[0m*\033[1m]\033[0m '
+    if [ "$1" == "-n" ]
+    then
+        printf "%s" "$2"
+    else
+        echo "$1"
+    fi
+}
+
+function err() {
+    printf '\033[1m[\033[0m-\033[1m]\033[0m '
     if [ "$1" == "-n" ]
     then
         printf "%s" "$2"
@@ -113,6 +131,37 @@ function test_run_php() {
     done
 }
 
+function test_dl_videos() {
+    mkdir -p saved_videos
+    (
+        cd saved_videos || exit 1
+        youtube-dl --quiet https://www.youtube.com/watch?v=tPEE9ZwTmy0
+        youtube-dl --quiet https://www.youtube.com/watch?v=YDiZB42z3TM
+    ) || exit 1
+}
+
+function test_thumbnails() {
+    bash -e ./scripts/thumbnails.sh
+    local count=0
+    count="$(find thumbnails/ | wc -l)"
+    if [ "$count" -lt "4" ]
+    then
+        echo "error: expected 4 thumbnails but got $count"
+        exit 1
+    fi
+}
+
+function test_slug() {
+    bash -e ./scripts/slug_video_names.sh
+    if find saved_videos/ -type f -printf "%f\n" | grep -q '[^a-zA-Z0-9\._]'
+    then
+        err "ERROR: found non slugged characters:"
+        echo ""
+        find saved_videos/ -type f -printf "%f\n" | grep --color=auto '[^a-zA-Z0-9\._]'
+        exit 1
+    fi
+}
+
 function run_tests() {
     run_test "shellcheck" \
         'find . -name "*.sh" -print0 | xargs --null shellcheck'
@@ -124,6 +173,12 @@ function run_tests() {
         "test_run_php"
     run_test "validate html" \
         "html5validator --root test/"
+    run_test "download sample videos" \
+        "test_dl_videos"
+    run_test_verbose "script/slug_video_names.sh" \
+        "test_slug"
+    run_test "script/thumbnails.sh" \
+        "test_thumbnails"
 }
 
 if [ "$1" == "test" ]
