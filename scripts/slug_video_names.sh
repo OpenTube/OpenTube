@@ -29,8 +29,8 @@ c=0
 for f in ./saved_videos/*
 do
     f_slug="${f//[^a-zA-Z0-9\.]/_}"
-    f_slug="saved_videos/${f_slug:15}"
-    if [ "$f" != "./$f_slug" ]
+    f_slug="./saved_videos/${f_slug:15}"
+    if [ "$f" != "$f_slug" ]
     then
         printf '\033[1m"\033[0m%s\033[1m" -> "\033[0m%s\033[1m"\033[0m\n' "$(f_chomp "$f")" "$(f_chomp "$f_slug")"
         mv "$f" "$f_slug"
