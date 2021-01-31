@@ -52,6 +52,7 @@ function generate_thumbnail_static() {
         -t 1 \
         -s "$RESOLUTION" \
         -f image2 \
+        -frames:v 1 \
         "$png_path"
     # echo "seconds: '$seconds' second: '$second' $video_path"
 }
