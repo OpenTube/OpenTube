@@ -76,12 +76,12 @@ for video in \
     ./saved_videos/*.mp4 \
     ./saved_videos/*.webm
 do
-    img="thumbnails/$(basename "$video_path").png"
+    img="thumbnails/$(basename "$video").gif"
     if [ ! -f "$img" ] || [ "$arg_force" == "1" ]
     then
         generate_thumbnail "$video" "$img"
     fi
-    img="thumbnails/$(basename "$video_path").gif"
+    img="thumbnails/$(basename "$video").png"
     if [ ! -f "$img" ] || [ "$arg_force" == "1" ]
     then
         generate_thumbnail_static "$video" "$img"
