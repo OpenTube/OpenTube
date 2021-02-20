@@ -50,7 +50,7 @@ function run_app() {
         echo "Error: some php process is already running"
         for proc in $(pgrep -f php)
         do
-            printf "  %s\n" "$(ps o cmd -p "$proc" | tail -n1)"
+            printf "  %s\\n" "$(ps o cmd -p "$proc" | tail -n1)"
         done
         exit 1
     fi
@@ -153,11 +153,11 @@ function test_thumbnails() {
 
 function test_slug() {
     bash -e ./scripts/slug_video_names.sh
-    if find saved_videos/ -type f -printf "%f\n" | grep -q '[^a-zA-Z0-9\._]'
+    if find saved_videos/ -type f -printf "%f\\n" | grep -q '[^a-zA-Z0-9\._]'
     then
         err "ERROR: found non slugged characters:"
         echo ""
-        find saved_videos/ -type f -printf "%f\n" | grep --color=auto '[^a-zA-Z0-9\._]'
+        find saved_videos/ -type f -printf "%f\\n" | grep --color=auto '[^a-zA-Z0-9\._]'
         exit 1
     fi
 }
