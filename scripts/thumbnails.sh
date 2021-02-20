@@ -72,6 +72,23 @@ function generate_thumbnail() {
 }
 
 shopt -s nullglob
+
+function generate_thumbnail_all() {
+    local dir="$1"
+    local video="$2"
+    local img="$3"
+    img="thumbnails/$dir/$(basename "$video").gif"
+    if [ ! -f "$img" ] || [ "$arg_force" == "1" ]
+    then
+        generate_thumbnail "$video" "$img"
+    fi
+    img="thumbnails/$dir/$(basename "$video").png"
+    if [ ! -f "$img" ] || [ "$arg_force" == "1" ]
+    then
+        generate_thumbnail_static "$video" "$img"
+    fi
+}
+
 for category in {saved,downloaded,unlisted}
 do
     mkdir -p thumbnails/"$category"
@@ -80,16 +97,20 @@ do
         ./videos/"$category"/*.mp4 \
         ./videos/"$category"/*.webm
     do
-        img="thumbnails/$category/$(basename "$video").gif"
-        if [ ! -f "$img" ] || [ "$arg_force" == "1" ]
-        then
-            generate_thumbnail "$video" "$img"
-        fi
-        img="thumbnails/$category/$(basename "$video").png"
-        if [ ! -f "$img" ] || [ "$arg_force" == "1" ]
-        then
-            generate_thumbnail_static "$video" "$img"
-        fi
+        generate_thumbnail_all "$category" "$video" "$img"
+    done
+done
+
+for user in ./videos/users/*/
+do
+    user="${user:9:-1}"
+    mkdir -p thumbnails/"$user"
+    for video in \
+        ./videos/"$user"/*.flv \
+        ./videos/"$user"/*.mp4 \
+        ./videos/"$user"/*.webm
+    do
+        generate_thumbnail_all "$user" "$video" "$img"
     done
 done
 

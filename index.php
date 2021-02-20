@@ -31,11 +31,11 @@
     function html_video_viewer($video, $category) {
         $ext = pathinfo($video, PATHINFO_EXTENSION);
         $name = pathinfo($video, PATHINFO_FILENAME);
-        echo "<h1>";
+        echo "<h3>";
         echo "<a href=\"video.php?t=$video&c=$category\">$name</a>";
         // keep extension since extension matters also for urls
         $thumbnail = "thumbnails/$category/$name.$ext.png";
-        echo "</h1>";
+        echo "</h3>";
         echo "<video width=\"320\" height=\"240\" controls poster=\"$thumbnail\">";
         echo "<source src=\"videos/$category/$video\" type=\"video/$ext\">";
         echo '
@@ -99,8 +99,28 @@
         // echo "start: $start_page end: $end_page";
         echo "<span>[videos: $total_videos pages: $int_pages]</span>";
     }
-    list_video_dir('downloaded', true);
-    list_video_dir('saved', false);
+    function preview_users() {
+        $user_dir = new DirectoryIterator('videos/users/');
+        $num_users = 0;
+        foreach ($user_dir as $fileinfo) {
+            if (++$num_users > 10) {
+                return;
+            }
+            if ($fileinfo->isDir() && !$fileinfo->isDot()) {
+                $user = $fileinfo->getFilename();
+                echo '<a href="index.php?u=' . $user . '">' . $user . '</a><br>';
+            }
+        }
+    }
+    if (isset($_GET['u'])) {
+        $user = $_GET['u'];
+        echo '<h2>' . $user . '</h2>';
+        list_video_dir('users/' . $user, false);
+    } else {
+        preview_users();
+        list_video_dir('downloaded', true);
+        list_video_dir('saved', false);
+    }
 ?>
     </div> <!-- .content -->
     <div>
