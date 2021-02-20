@@ -32,6 +32,9 @@
                 $category = $_GET['c'];
             }
         }
+        if(isset($_GET['u'])) {
+            $category = 'users/' . $_GET['u'];
+        }
         $path = "videos/$category/$title";
         if(!is_file($path)) {
             echo "<br>ERROR VIDEO NOT FOUND<br>";

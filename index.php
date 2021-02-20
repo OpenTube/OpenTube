@@ -28,16 +28,20 @@
             return ($needlePos === false ? false : ($needlePos+1));
         }
     }
-    function html_video_viewer($video, $category) {
+    function html_video_viewer($video, $category, $user) {
         $ext = pathinfo($video, PATHINFO_EXTENSION);
         $name = pathinfo($video, PATHINFO_FILENAME);
         echo "<h3>";
-        echo "<a href=\"video.php?t=$video&c=$category\">$name</a>";
+        if ($category == 'users') {
+            echo "<a href=\"video.php?t=$video&u=$user\">$name</a>";
+        } else {
+            echo "<a href=\"video.php?t=$video&c=$category\">$name</a>";
+        }
         // keep extension since extension matters also for urls
-        $thumbnail = "thumbnails/$category/$name.$ext.png";
+        $thumbnail = "thumbnails/" . ($user ? "users/$user" : $category) . "/$name.$ext.png";
         echo "</h3>";
         echo "<video width=\"320\" height=\"240\" controls poster=\"$thumbnail\">";
-        echo "<source src=\"videos/$category/$video\" type=\"video/$ext\">";
+        echo "<source src=\"videos/" . ($user ? "users/$user" : $category) . "/$video\" type=\"video/$ext\">";
         echo '
             Your browser does not support the video tag.
             </video>
@@ -47,14 +51,14 @@
         echo "<br><a href=\"edit.php?delete=$video\">DELETE</a><br>";
         echo "<br><a href=\"edit.php?save=$video\">SAVE</a><br>";
     }
-    function html_video($video, $category, $editable) {
-        html_video_viewer($video, $category);
+    function html_video($video, $category, $user, $editable) {
+        html_video_viewer($video, $category, $user);
         if ($editable) {
             html_video_buttons($video);
         }
     }
-    function list_video_dir($category, $editable) {
-        $dir = 'videos/' . $category;
+    function list_video_dir($category, $user, $editable) {
+        $dir = 'videos/' . ($user ? "users/$user" : $category);
         $page = isset($_GET['p']) ? (int)$_GET['p'] : 0;
         $per_page = isset($_GET['pp']) ? (int)$_GET['pp'] : 5;
         $search = isset($_GET['s']) ? $_GET['s'] : false;
@@ -67,7 +71,7 @@
                     continue;
                 $total_videos++;
                 if($total_videos > $page * $per_page && $total_videos <= $page * $per_page + $per_page)
-                    html_video($entry, $category, $editable);
+                    html_video($entry, $category, $user, $editable);
             }
             closedir($handle);
         }
@@ -115,11 +119,11 @@
     if (isset($_GET['u'])) {
         $user = $_GET['u'];
         echo '<h2>' . $user . '</h2>';
-        list_video_dir('users/' . $user, false);
+        list_video_dir('users', $user, false);
     } else {
         preview_users();
-        list_video_dir('downloaded', true);
-        list_video_dir('saved', false);
+        list_video_dir('downloaded', null, true);
+        list_video_dir('saved', null, false);
     }
 ?>
     </div> <!-- .content -->
