@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [ ! -d saved_videos/ ]
+if [ ! -d videos/saved/ ]
 then
-    echo "Error: saved_videos/ directory not found"
+    echo "Error: videos/saved/ directory not found"
     exit 1
 fi
 
@@ -26,10 +26,10 @@ function f_chomp() {
 
 c=0
 
-for f in ./saved_videos/*
+for f in ./videos/saved/*
 do
     f_slug="${f//[^a-zA-Z0-9\.]/_}"
-    f_slug="./saved_videos/${f_slug:15}"
+    f_slug="./videos/saved/${f_slug:15}"
     if [ "$f" != "$f_slug" ]
     then
         printf '\033[1m"\033[0m%s\033[1m" -> "\033[0m%s\033[1m"\033[0m\n' "$(f_chomp "$f")" "$(f_chomp "$f_slug")"

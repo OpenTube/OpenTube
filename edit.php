@@ -8,26 +8,26 @@
     <h1><a href="index.php">OpenTube</a></h1>
 <?php
     function save_video($video) {
-        if (!is_dir('saved_videos')) {
-            mkdir('saved_videos', 0777, true);
+        if (!is_dir('videos/saved')) {
+            mkdir('videos/saved', 0777, true);
         }
         $full_path = 'videos/' . $video;
         if (!is_file($full_path)) {
             echo "<br>Error: file '$full_path' does not exist.<br>";
             return;
         }
-        rename($full_path, 'saved_videos/' . $video);
+        rename($full_path, 'videos/saved/' . $video);
     }
     function delete_video($video) {
-        if (!is_dir('videos')) {
-            echo "<br>Error: videos directory not found";
+        if (!is_dir('videos/downloaded')) {
+            echo "<br>Error: videos/downloaded directory not found";
             return;
         }
-        if (!is_file('videos/' . $video)) {
+        if (!is_file('videos/downloaded&' . $video)) {
             echo "<br>Error: file '$video' does not exist.<br>";
             return;
         }
-        unlink('videos/' . $video);
+        unlink('videos/downloaded/' . $video);
     }
     echo '<br><a href="index.php">Okay</a><br>';
     if (isset($_GET['delete'])) {

@@ -28,20 +28,16 @@
             return ($needlePos === false ? false : ($needlePos+1));
         }
     }
-    function html_video_viewer($video, $saved) {
+    function html_video_viewer($video, $category) {
         $ext = pathinfo($video, PATHINFO_EXTENSION);
         $name = pathinfo($video, PATHINFO_FILENAME);
         echo "<h1>";
-        if($saved) {
-            echo "<a href=\"video.php?t=$video\">$name</a>";
-        } else {
-            echo "$name";
-        }
+        echo "<a href=\"video.php?t=$video&c=$category\">$name</a>";
         // keep extension since extension matters also for urls
-        $thumbnail = "thumbnails/$name.$ext.png";
+        $thumbnail = "thumbnails/$category/$name.$ext.png";
         echo "</h1>";
         echo "<video width=\"320\" height=\"240\" controls poster=\"$thumbnail\">";
-        echo "<source src=\"" . (($saved) ? "saved_" : "") . "videos/$video\" type=\"video/$ext\">";
+        echo "<source src=\"videos/$category/$video\" type=\"video/$ext\">";
         echo '
             Your browser does not support the video tag.
             </video>
@@ -51,13 +47,14 @@
         echo "<br><a href=\"edit.php?delete=$video\">DELETE</a><br>";
         echo "<br><a href=\"edit.php?save=$video\">SAVE</a><br>";
     }
-    function html_video($video, $saved) {
-        html_video_viewer($video, $saved);
-        if (!$saved) {
+    function html_video($video, $category, $editable) {
+        html_video_viewer($video, $category);
+        if ($editable) {
             html_video_buttons($video);
         }
     }
-    function list_video_dir($dir, $saved) {
+    function list_video_dir($category, $editable) {
+        $dir = 'videos/' . $category;
         $page = isset($_GET['p']) ? (int)$_GET['p'] : 0;
         $per_page = isset($_GET['pp']) ? (int)$_GET['pp'] : 5;
         $search = isset($_GET['s']) ? $_GET['s'] : false;
@@ -70,7 +67,7 @@
                     continue;
                 $total_videos++;
                 if($total_videos > $page * $per_page && $total_videos <= $page * $per_page + $per_page)
-                    html_video($entry, $saved);
+                    html_video($entry, $category, $editable);
             }
             closedir($handle);
         }
@@ -102,8 +99,8 @@
         // echo "start: $start_page end: $end_page";
         echo "<span>[videos: $total_videos pages: $int_pages]</span>";
     }
-    list_video_dir('videos', false);
-    list_video_dir('saved_videos', true);
+    list_video_dir('downloaded', true);
+    list_video_dir('saved', false);
 ?>
     </div> <!-- .content -->
     <div>

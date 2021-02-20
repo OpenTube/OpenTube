@@ -62,7 +62,7 @@
         echo "<br>DOWNLOAD NOT SUPPORTED CURRENTLY<br>";
         echo '<br><a href="index.php">Okay</a><br>';
         // echo "<br>downloading '$hash' ...<br>";
-        // verbose_exec("mkdir -p videos && cd videos && /usr/local/bin/youtube-dl -f mp4 https://www.youtube.com/watch?v=$hash");
+        // verbose_exec("mkdir -p videos/downloaded && cd videos/downloaded && /usr/local/bin/youtube-dl -f mp4 https://www.youtube.com/watch?v=$hash");
         // echo "<br>finished '$hash' ...<br>";
         // echo '<br><a href="index.php">Okay</a><br>';
     }

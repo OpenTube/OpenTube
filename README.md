@@ -14,7 +14,7 @@ Basic video streaming platform. Simple php website to watch videos.
 
 generate video folder and download sample video
 
-        mkdir -p saved_videos && cd saved_videos
+        mkdir -p videos/{saved,downloaded,unlisted} && cd videos/saved/
         youtube-dl -f mp4 https://www.youtube.com/watch?v=2r1D-sXTVTo
 
 generate thumbnails using ffmpeg

@@ -26,10 +26,13 @@
             http_response_code(404);
             die();
         }
-        $path = "saved_videos/$title";
-        if(isset($_GET["unlisted"]) && $_GET["unlisted"] == "true") {
-            $path = "unlisted_videos/$title";
+        $category = 'saved';
+        if(isset($_GET['c'])) {
+            if($_GET['c'] == 'saved' || $_GET['c'] == 'downloaded' || $_GET['c'] == 'unlisted') {
+                $category = $_GET['c'];
+            }
         }
+        $path = "videos/$category/$title";
         if(!is_file($path)) {
             echo "<br>ERROR VIDEO NOT FOUND<br>";
             echo '<br><a href="index.php">Okay</a><br>';

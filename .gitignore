@@ -6,8 +6,7 @@ thumbnails
 tags
 vendor/
 node_modules/
-saved_videos/
-unlisted_videos/
+videos/
 css/custom.css
 css/custom/*.css
 test/

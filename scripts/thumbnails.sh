@@ -72,20 +72,24 @@ function generate_thumbnail() {
 }
 
 shopt -s nullglob
-for video in \
-    ./saved_videos/*.flv \
-    ./saved_videos/*.mp4 \
-    ./saved_videos/*.webm
+for category in {saved,downloaded,unlisted}
 do
-    img="thumbnails/$(basename "$video").gif"
-    if [ ! -f "$img" ] || [ "$arg_force" == "1" ]
-    then
-        generate_thumbnail "$video" "$img"
-    fi
-    img="thumbnails/$(basename "$video").png"
-    if [ ! -f "$img" ] || [ "$arg_force" == "1" ]
-    then
-        generate_thumbnail_static "$video" "$img"
-    fi
+    mkdir -p thumbnails/"$category"
+    for video in \
+        ./videos/"$category"/*.flv \
+        ./videos/"$category"/*.mp4 \
+        ./videos/"$category"/*.webm
+    do
+        img="thumbnails/$category/$(basename "$video").gif"
+        if [ ! -f "$img" ] || [ "$arg_force" == "1" ]
+        then
+            generate_thumbnail "$video" "$img"
+        fi
+        img="thumbnails/$category/$(basename "$video").png"
+        if [ ! -f "$img" ] || [ "$arg_force" == "1" ]
+        then
+            generate_thumbnail_static "$video" "$img"
+        fi
+    done
 done
 
