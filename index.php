@@ -13,7 +13,7 @@
     </form>
     -->
     <form action="index.php" method="get">
-        sarch: <input type="text" name="s" value="<?php echo $_GET['s']; ?>">
+        sarch: <input type="text" name="s" value="<?php echo isset($_GET['s']) ? $_GET['s'] : ''; ?>">
         <input type="hidden" name="pp" value="<?php echo isset($_GET['pp']) ? (int)$_GET['pp'] : 5; ?>">
         <br>
         <input type="submit">
