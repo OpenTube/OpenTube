@@ -106,15 +106,17 @@
     function preview_users() {
         $user_dir = new DirectoryIterator('videos/users/');
         $num_users = 0;
+        echo '<div class="users">';
         foreach ($user_dir as $fileinfo) {
             if (++$num_users > 10) {
-                return;
+                break;
             }
             if ($fileinfo->isDir() && !$fileinfo->isDot()) {
                 $user = $fileinfo->getFilename();
-                echo '<a href="index.php?u=' . $user . '">' . $user . '</a><br>';
+                echo '  <a href="index.php?u=' . $user . '" class="user">' . $user . '</a>';
             }
         }
+        echo '</div>';
     }
     if (isset($_GET['u'])) {
         $user = $_GET['u'];

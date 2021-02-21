@@ -36,6 +36,23 @@ body {
     flex-grow: 1;
 }
 
+.users {
+    margin: 5px;
+}
+
+.user {
+    margin: 10px;
+    padding: 10px;
+    border: 3px solid rgba(206, 78, 163, 0.5);
+    background-color: blueviolet;
+    display: inline-block;
+}
+
+a:link.user, a:visited.user, a:hover.user, a:hover.user {
+    color: rgb(67, 153, 202);
+    text-decoration: none;
+}
+
 footer {
     padding: 10px;
     background-color: rgb(116, 116, 116);
