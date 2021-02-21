@@ -10,4 +10,5 @@ videos/
 css/custom.css
 css/custom/*.css
 test/
+.ht*
 
