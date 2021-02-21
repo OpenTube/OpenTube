@@ -120,7 +120,9 @@
     }
     if (isset($_GET['u'])) {
         $user = $_GET['u'];
-        echo '<h2>' . $user . '</h2>';
+        echo '<div class="user-banner">';
+        echo '  <h2>' . $user . '</h2>';
+        echo '</div>';
         list_video_dir('users', $user, false);
     } else {
         preview_users();

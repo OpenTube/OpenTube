@@ -53,6 +53,15 @@ a:link.user, a:visited.user, a:hover.user, a:hover.user {
     text-decoration: none;
 }
 
+.user-banner {
+    margin: 5px;
+    border: 2px solid black;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 footer {
     padding: 10px;
     background-color: rgb(116, 116, 116);
