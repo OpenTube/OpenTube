@@ -15,6 +15,11 @@
     <form action="index.php" method="get">
         sarch: <input type="text" name="s" value="<?php echo isset($_GET['s']) ? $_GET['s'] : ''; ?>">
         <input type="hidden" name="pp" value="<?php echo isset($_GET['pp']) ? (int)$_GET['pp'] : 5; ?>">
+        <?php
+            if (isset($_GET['u'])) {
+                echo '<input type="hidden" name="u" value="' . $_GET['u'] . '">';
+            }
+        ?>
         <br>
         <input type="submit">
     </form>
@@ -98,11 +103,19 @@
                 $end_page = $int_pages;
             }
         }
+        $user_param = '';
+        $search_param = '';
+        if (isset($_GET['u'])) {
+            $user_param = '&u=' . $_GET['u'];
+        }
+        if (isset($_GET['s'])) {
+            $search_param = '&s=' . $_GET['s'];
+        }
         for($i = $start_page; $i <= $end_page; $i++) {
             if ($page === $i) {
-                echo "<a class=\"current-page\" href=\"index.php?p=$i&pp=$per_page&s=$search\">$i</a>";
+                echo "<a class=\"current-page\" href=\"index.php?p=$i&pp=$per_page$user_param$search_param\">$i</a>";
             } else {
-                echo "<a href=\"index.php?p=$i&pp=$per_page&s=$search\">$i</a>";
+                echo "<a href=\"index.php?p=$i&pp=$per_page$user_param$search_param\">$i</a>";
             }
         }
         echo '</div>';
