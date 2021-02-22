@@ -181,6 +181,8 @@ function run_tests() {
         "test_thumbnails"
 }
 
+mkdir -p videos/{saved,downloaded,unlisted}
+
 if [ "$1" == "test" ]
 then
     run_tests
