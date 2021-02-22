@@ -65,19 +65,23 @@
         $total_videos = 0;
         if ($handle = opendir($dir)) {
             while (false !== ($entry = readdir($handle))) {
-                if ($entry == "." || $entry == "..")
+                if ($entry == "." || $entry == "..") {
                     continue;
-                if ($search && !str_contains(pathinfo($entry, PATHINFO_FILENAME), $search))
+                }
+                if ($search && !str_contains(pathinfo($entry, PATHINFO_FILENAME), $search)) {
                     continue;
+                }
                 $total_videos++;
-                if($total_videos > $page * $per_page && $total_videos <= $page * $per_page + $per_page)
+                if($total_videos > $page * $per_page && $total_videos <= $page * $per_page + $per_page) {
                     html_video($entry, $category, $user, $editable);
+                }
             }
             closedir($handle);
         }
         // TODO: BIG REFACTOR PLEASE OR JUST USE A DATABASE FINALLY
-        if ($total_videos == 0)
+        if ($total_videos == 0) {
             return;
+        }
         echo '<div class="pages">';
         $float_pages = $total_videos / $per_page;
         $int_pages = (int)$float_pages;
@@ -90,17 +94,18 @@
         if ($start_page < 0) {
             $end_page -= $start_page;
             $start_page = 0;
-            if ($end_page > $int_pages)
+            if ($end_page > $int_pages) {
                 $end_page = $int_pages;
+            }
         }
         for($i = $start_page; $i <= $end_page; $i++) {
-            if ($page === $i)
-            echo "<a class=\"current-page\" href=\"index.php?p=$i&pp=$per_page&s=$search\">$i</a>";
-            else
-            echo "<a href=\"index.php?p=$i&pp=$per_page&s=$search\">$i</a>";
+            if ($page === $i) {
+                echo "<a class=\"current-page\" href=\"index.php?p=$i&pp=$per_page&s=$search\">$i</a>";
+            } else {
+                echo "<a href=\"index.php?p=$i&pp=$per_page&s=$search\">$i</a>";
+            }
         }
         echo '</div>';
-        // echo "start: $start_page end: $end_page";
         echo "<span>[videos: $total_videos pages: $int_pages]</span>";
     }
     function preview_users() {
