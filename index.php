@@ -109,7 +109,12 @@
         echo "<span>[videos: $total_videos pages: $int_pages]</span>";
     }
     function preview_users() {
-        $user_dir = new DirectoryIterator('videos/users/');
+        $users_path = 'videos/users';
+        if (!is_dir($users_path)) {
+            mkdir($users_path, 0777, true);
+            return;
+        }
+        $user_dir = new DirectoryIterator($users_path);
         $num_users = 0;
         echo '<div class="users">';
         foreach ($user_dir as $fileinfo) {
