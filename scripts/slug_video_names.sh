@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [ ! -d videos/saved/ ]
+if [ ! -d videos/ ]
 then
-    echo "Error: videos/saved/ directory not found"
+    echo "Error: videos/ directory not found"
     exit 1
 fi
 
@@ -18,24 +18,38 @@ function f_chomp() {
     local strlen=${#str}
     if [ "$strlen" -gt "$mw" ]
     then
-        printf "%s.." "${str:15:mw}"
+        printf "%s.." "${str::mw}"
     else
-        printf "%s" "${str:15}"
+        printf "%s" "${str}"
     fi
 }
 
 c=0
 
-for f in ./videos/saved/*
-do
-    f_slug="${f//[^a-zA-Z0-9\.]/_}"
-    f_slug="./videos/saved/${f_slug:15}"
-    if [ "$f" != "$f_slug" ]
+function slug_video() {
+    local filename="$1"
+    local path
+    local filename_slug
+    path="$(dirname "$filename")"
+    filename="$(basename "$filename")"
+    filename_slug="${filename//[^a-zA-Z0-9\.]/_}"
+    if [ "$filename" != "$filename_slug" ]
     then
-        printf '\033[1m"\033[0m%s\033[1m" -> "\033[0m%s\033[1m"\033[0m\n' "$(f_chomp "$f")" "$(f_chomp "$f_slug")"
-        mv "$f" "$f_slug"
+        printf '\033[1m"\033[0m%s\033[1m" -> "\033[0m%s\033[1m"\033[0m\n' \
+            "$(f_chomp "$filename")" "$(f_chomp "$filename_slug")"
+        filename_slug="$path/$filename_slug"
+        mv "$f" "$filename_slug"
         c="$((c+1))"
     fi
+}
+
+for f in ./videos/{saved,downloaded,unlisted}/*.{flv,mp4,webm}
+do
+    [ -f "$f" ] && slug_video "$f"
+done
+for f in ./videos/users/*/*.{flv,mp4,webm}
+do
+    [ -f "$f" ] && slug_video "$f"
 done
 
 echo ""
