@@ -26,6 +26,19 @@ function f_chomp() {
 
 c=0
 
+function save_mv() {
+	local src="$1"
+	local dst="$2"
+	if [ -f "$dst" ]
+	then
+		echo "Error: failed to move file already exists"
+		echo "	src: $src"
+		echo "	dst: $dst"
+		exit 1
+	fi
+	mv "$src" "$dst" || exit 1
+}
+
 function slug_video() {
     local filename="$1"
     local path
@@ -38,7 +51,7 @@ function slug_video() {
         printf '\033[1m"\033[0m%s\033[1m" -> "\033[0m%s\033[1m"\033[0m\n' \
             "$(f_chomp "$filename")" "$(f_chomp "$filename_slug")"
         filename_slug="$path/$filename_slug"
-        mv "$f" "$filename_slug"
+        save_mv "$f" "$filename_slug"
         c="$((c+1))"
     fi
 }
