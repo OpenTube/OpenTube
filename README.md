@@ -36,9 +36,13 @@ not production ready just for testing
         ./dev.sh install
         ./dev.sh test
 
-### Custom css
+### Customization
 
 You can write your own css at ``css/custom.css`` if you want to avoid git conflicts.
+
+You can prepend or append to the landing page via ``custom/pre_index.php`` and ``custom/post_index.php``
+
+The custom html header can be edited at ``custom/header.php``
 
 ### License
 
