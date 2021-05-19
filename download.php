@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<?php require 'php/head.php'; ?>
+<?php require 'php/header.php'; ?>
 </head>
 <body>
     <div class="content">

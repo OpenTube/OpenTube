@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<?php require 'php/head.php'; ?>
+<?php require 'php/header.php'; ?>
 </head>
 <body>
     <div class="content">
     <h1><a href="index.php">OpenTube</a></h1>
+    <?php
+    if (file_exists('custom/pre_index.php')) {
+        require 'custom/pre_index.php';
+    }
+    ?>
     <!--
     <form action="download.php" method="post">
     YouTube hash: <input type="text" name="yt-hash"><br>
@@ -131,7 +136,7 @@
         $num_users = 0;
         echo '<div class="users">';
         foreach ($user_dir as $fileinfo) {
-            if (++$num_users > 10) {
+            if (++$num_users > 15) {
                 break;
             }
             if ($fileinfo->isDir() && !$fileinfo->isDot()) {
@@ -151,6 +156,9 @@
         preview_users();
         list_video_dir('downloaded', null, true);
         list_video_dir('saved', null, false);
+    }
+    if (file_exists('custom/post_index.php')) {
+        require 'custom/post_index.php';
     }
 ?>
     </div> <!-- .content -->

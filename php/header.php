@@ -7,4 +7,7 @@
     if (file_exists('css/custom.css')) {
         echo '<link rel="stylesheet" type="text/css" href="css/custom.css">';
     }
+    if (file_exists('custom/header.php')) {
+        require 'custom/header.php';
+    }
 ?>

@@ -9,6 +9,7 @@ node_modules/
 videos/
 css/custom.css
 css/custom/*.css
+custom/
 test/
 .ht*
 
