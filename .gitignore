@@ -2,6 +2,9 @@
 *.mkv
 *.webm
 *.gif
+*.db
+*.sqlite
+*.sqlite3
 thumbnails
 tags
 vendor/
@@ -12,4 +15,3 @@ css/custom/*.css
 custom/
 test/
 .ht*
-
