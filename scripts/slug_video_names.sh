@@ -45,7 +45,7 @@ function slug_video() {
     local filename_slug
     path="$(dirname "$filename")"
     filename="$(basename "$filename")"
-    filename_slug="${filename//[^a-zA-Z0-9\.]/_}"
+    filename_slug="${filename//[^a-zA-Z0-9\._-]/_}"
     if [ "$filename" != "$filename_slug" ]
     then
         printf '\033[1m"\033[0m%s\033[1m" -> "\033[0m%s\033[1m"\033[0m\n' \

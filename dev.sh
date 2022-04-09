@@ -153,11 +153,11 @@ function test_thumbnails() {
 
 function test_slug() {
     bash -e ./scripts/slug_video_names.sh
-    if find videos/saved/ -type f -printf "%f\\n" | grep -q '[^a-zA-Z0-9\._]'
+    if find videos/saved/ -type f -printf "%f\\n" | grep -q '[^a-zA-Z0-9\._-]'
     then
         err "ERROR: found non slugged characters:"
         echo ""
-        find videos/saved/ -type f -printf "%f\\n" | grep --color=auto '[^a-zA-Z0-9\._]'
+        find videos/saved/ -type f -printf "%f\\n" | grep --color=auto '[^a-zA-Z0-9\._-]'
         exit 1
     fi
 }
