@@ -78,6 +78,9 @@
                 if ($entry == "." || $entry == "..") {
                     continue;
                 }
+                if (str_ends_with($entry, ".txt")) {
+                    continue;
+                }
                 if ($search && !str_contains(pathinfo($entry, PATHINFO_FILENAME), $search)) {
                     continue;
                 }
