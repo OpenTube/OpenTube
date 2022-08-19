@@ -53,8 +53,12 @@
             return;
         }
 
-        echo "moved video to trash (recoverable)";
-        rename($video_path, $delete_path);
+        if (!rename($video_path, $delete_path)) {
+            echo "Error: deletion failed.<br>";
+            echo "try running ./scripts/fix_permissions.sh and set the videos/ owner group to the web server group";
+        } else {
+            echo "moved video to trash (recoverable)<br>";
+        }
     }
     if (isset($_GET['u'])) {
         if (isset($_GET['delete'])) {
