@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <?php require 'php/header.php'; ?>
+<?php require 'php/accounts.php'; ?>
 </head>
 <body>
     <div class="content">
@@ -57,15 +58,29 @@
             </video>
         ';
     }
-    function html_video_buttons($video) {
+    function html_video_buttons($video, $user) {
+        if ($user) {
+            html_user_video_buttons($video, $user);
+            return;
+        }
+        // downloads dir buttons:
         echo "<br><a href=\"edit.php?delete=$video\">DELETE</a><br>";
         echo "<br><a href=\"edit.php?save=$video\">SAVE</a><br>";
     }
+    function html_user_video_buttons($video, $user) {
+        echo "<br><a href=\"edit.php?u=$user&delete=$video\">DELETE</a><br>";
+    }
     function html_video($video, $category, $user, $editable) {
+        echo '<div class="video-container">';
+        echo '  <div class="video-viewer">';
         html_video_viewer($video, $category, $user);
+        echo '  </div>';
         if ($editable) {
-            html_video_buttons($video);
+            echo '  <div class="video-buttons">';
+            html_video_buttons($video, $user);
+            echo '  </div>';
         }
+        echo '</div>';
     }
     function list_video_dir($category, $user, $editable) {
         $dir = 'videos/' . ($user ? "users/$user" : $category);
@@ -154,7 +169,7 @@
         echo '<div class="user-banner">';
         echo '  <h2>' . $user . '</h2>';
         echo '</div>';
-        list_video_dir('users', $user, false);
+        list_video_dir('users', $user, is_admin());
     } else {
         preview_users();
         list_video_dir('downloaded', null, true);

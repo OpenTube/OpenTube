@@ -20,21 +20,54 @@
     }
     function delete_video($video) {
         if (!is_dir('videos/downloaded')) {
-            echo "<br>Error: videos/downloaded directory not found";
+            echo '<br>Error: "videos/downloaded" directory not found';
             return;
         }
-        if (!is_file('videos/downloaded&' . $video)) {
+        if (!is_file('videos/downloaded/' . $video)) {
             echo "<br>Error: file '$video' does not exist.<br>";
             return;
         }
         unlink('videos/downloaded/' . $video);
     }
-    echo '<br><a href="index.php">Okay</a><br>';
-    if (isset($_GET['delete'])) {
-        delete_video($_GET['delete']);
-    } else if (isset($_GET['save'])) {
-        save_video($_GET['save']);
+    function delete_user_video($video, $user) {
+        $video_dir = 'videos/users/' . $user . '/';
+        if (!is_dir($video_dir)) {
+            echo '<br>Error: "' . $video_dir . '" directory not found';
+            return;
+        }
+        $video_path = $video_dir . $video;
+        if (!is_file($video_path)) {
+            echo '<br>Error: file "' . $video_path . '" does not exist.<br>';
+            return;
+        }
+        if (!is_dir('videos/deleted')) {
+            mkdir('videos/deleted', 0777, true);
+        }
+        $delete_dir = 'videos/deleted/' . $user . '/';
+        if (!is_dir($delete_dir)) {
+            mkdir($delete_dir, 0777, true);
+        }
+        $delete_path = $delete_dir . $video;
+        if (is_file($delete_path)) {
+            echo '<br>Error: file "' . $video . '" already in trash. Please empty your trash first.<br>';
+            return;
+        }
+
+        echo "moved video to trash (recoverable)";
+        rename($video_path, $delete_path);
     }
+    if (isset($_GET['u'])) {
+        if (isset($_GET['delete'])) {
+            delete_user_video($_GET['delete'], $_GET['u']);
+        }
+    } else {
+        if (isset($_GET['delete'])) {
+            delete_video($_GET['delete']);
+        } else if (isset($_GET['save'])) {
+            save_video($_GET['save'], $user);
+        }
+    }
+    echo '<br><a href="index.php">Okay</a><br>';
 ?>
     </div> <!-- .content -->
     <div>

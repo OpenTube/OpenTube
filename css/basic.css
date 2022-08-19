@@ -48,6 +48,29 @@ body {
     display: inline-block;
 }
 
+.video-container {
+    display: flex;
+}
+
+.video-viewer h3 {
+    width: 340px;
+}
+
+.video-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.video-buttons a {
+    padding: 15px;
+    background-color: rgb(148, 26, 119);
+    border-radius: 10px;
+}
+
+.video-buttons a:hover {
+    background-color: rgb(173, 43, 142);
+}
+
 a:link.user, a:visited.user, a:hover.user, a:hover.user {
     color: rgb(67, 153, 202);
     text-decoration: none;
