@@ -33,9 +33,10 @@ add_video("videos/uploading/test.mp4", "test video");
 function add_video($user, $filepath, $title, $description, $source) {
     $db = get_db();
     $stmt = $db->prepare('INSERT INTO Videos (UUID, Hash, Title, Description, Source, UserID, UploadDate, UploaderIP) VALUES (:uuid, :hash, :title, :description, :source, :user_id, :date, :ip)');
+    $slug_title = preg_replace('/[^a-zA-Z0-9\._-]/u', '_', $title);
     $stmt->bindValue(':uuid', guidv4(), SQLITE3_TEXT);
     $stmt->bindValue(':hash', hash_file('sha256', $filepath), SQLITE3_TEXT);
-    $stmt->bindValue(':title', preg_replace('/^[a-zA-Z0-9\._-]+$/', '_', $title), SQLITE3_TEXT);
+    $stmt->bindValue(':title', $slug_title, SQLITE3_TEXT);
     $stmt->bindValue(':description', $description, SQLITE3_TEXT);
     $stmt->bindValue(':source', $source, SQLITE3_TEXT);
     $stmt->bindValue(':user_id', $user->id());
@@ -57,7 +58,6 @@ function add_video_token($username, $token, $filepath, $title, $description, $so
 if (!empty($_POST['title']) and !empty($_POST['description']))
 {
     $title = $_POST['title'];
-    echo "title=$title";
     $description = $_POST['description'];
     $source = isset($_POST['source']) ? $_POST['source'] : '';
     if(session_user()) {
