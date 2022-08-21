@@ -3,10 +3,11 @@
 <head>
 <?php require 'php/header.php'; ?>
 <?php require 'php/accounts.php'; ?>
+<?php require 'php/session.php'; ?>
 </head>
 <body>
     <div class="content">
-    <h1><a href="index.php">OpenTube</a></h1>
+    <?php require 'php/navbar.php'; ?>
     <?php
     if (file_exists('custom/pre_index.php')) {
         require 'custom/pre_index.php';
@@ -169,7 +170,7 @@
         echo '<div class="user-banner">';
         echo '  <h2>' . $user . '</h2>';
         echo '</div>';
-        list_video_dir('users', $user, is_admin());
+        list_video_dir('users', $user, session_is_admin());
     } else {
         preview_users();
         list_video_dir('downloaded', null, true);

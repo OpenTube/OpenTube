@@ -1,62 +1,36 @@
 <?php
 
-$_db_handle = null;
+require_once 'database.php';
 
-function check_sqlite_enabled() {
-    if(!extension_loaded('SQLite3')) {
-        $inipath = php_ini_loaded_file();
-        if ($inipath) {
-            echo 'Loaded php.ini: ' . $inipath . '<br>';
-        } else {
-            echo 'A php.ini file is not loaded' . '<br>';
-        }
-        echo "Could not load SQLite3 extension!" . '<br>';
-        echo "Make sure php with sqlite3 support is installed and activated." . '<br>';
-        echo "Open your php.ini file and uncomment the following lines:" . '<br>';
-        echo '<code style="white-space: pre;">';
-        echo "  extension=pdo_sqlite" . '<br>';
-        echo "  extension=sqlite3" . '<br>';
-        echo '</code>';
-    }
-}
+class User {
+    public $id;
+    public $username;
+    public $password;
+    public $admin;
 
-function create_tables($handle) {
-    $accounts_table =<<<EOF
-	CREATE TABLE IF NOT EXISTS Accounts
-	(
-	  ID            INTEGER   PRIMARY KEY    AUTOINCREMENT,
-	  Username      TEXT,
-	  Password      TEXT,
-	  Admin         INTEGER,
-	  RegisterDate  TEXT,
-	  RegisterIP    TEXT
-	);
-	EOF;
-    $ret = $handle->exec($accounts_table);
-    if($ret != 1) {
-        echo "failed to create table accounts.";
-        die();
+    function __construct($id, $username, $password, $admin)
+    {
+        $this->id = $id;
+        $this->username = $username;
+        $this->password = $password;
+        $this->admin = $admin;
     }
-}
 
-function connect_db() {
-    check_sqlite_enabled();
-    $handle = new SQLite3("db/accounts.db");
-    if(!$handle) {
-        echo $handle->lastErrorMsg();
-        die();
+    function correct_password($pass) {
+        return $this->password == $pass;
     }
-    return $handle;
-}
 
-function get_db() {
-    GLOBAL $_db_handle;
-    if ($_db_handle) {
-        return $_db_handle;
+    function is_admin() {
+        return $this->admin;
     }
-    $_db_handle = connect_db();
-    create_tables($_db_handle);
-    return $_db_handle;
+
+    function username() {
+        return $this->username;
+    }
+
+    function id() {
+        return $this->id;
+    }
 }
 
 function create_user($username, $password) {
@@ -70,6 +44,41 @@ function create_user($username, $password) {
     $ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'invalid';
     $stmt->bindValue(':register_ip', $ip);
     $res = $stmt->execute();
+    if(!$res) {
+        echo "user creation failed";
+        die();
+    }
+    $user = get_user_by_name($username);
+    echo "get user '$username' result: ";
+    print_r($user);
+    return $user;
+}
+
+function get_user_by_name($username) {
+    $db = get_db();
+    $stmt = $db->prepare('SELECT * FROM Accounts WHERE Username = :username');
+    $stmt->bindValue(':username', $username);
+    $res = $stmt->execute();
+    if ($res->numColumns() == 0) {
+        return null;
+    }
+    $row = $res->fetchArray(SQLITE3_ASSOC);
+    $user = new User($row['ID'], $row['Username'], $row['Password'], $row['Admin']);
+    return $user;
+}
+
+function login($username, $password) {
+    $user = get_user_by_name($username);
+    if (!$user) {
+        echo "failed to login user does not exist";
+        return null;
+    }
+    if (!$user->correct_password($password)) {
+        echo "failed to login wrong password";
+        return null;
+    }
+    echo "logged in!";
+    return $user;
 }
 
 function is_admin($username) {

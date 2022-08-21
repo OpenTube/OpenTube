@@ -2,6 +2,7 @@
 
 require_once 'database.php';
 
+/*
 function add_video($video_path, $title) {
     if(!is_dir('php') || !is_dir('videos')) {
         echo 'php/ or videos/ not found are you in the right directory?';
@@ -22,5 +23,6 @@ function add_video($video_path, $title) {
 }
 
 add_video("videos/uploading/test.mp4", "test video");
+*/
 
 ?>
