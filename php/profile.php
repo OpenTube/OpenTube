@@ -2,7 +2,7 @@
 
 require_once 'base.php';
 require_once 'database.php';
-require_once 'accounts.php';
+require_once 'controllers/users_controller.php';
 require_once 'session.php';
 
 if(!session_user()) {
@@ -23,4 +23,5 @@ $user = session_user();
     <button type="submit">generate</button>
 </form>
 
+<a href="add_video.php">upload video</a><br>
 <a href="logout.php">logout</a><br>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <?php require 'php/header.php'; ?>
-<?php require 'php/accounts.php'; ?>
+<?php require 'php/controllers/users_controller.php'; ?>
 <?php require 'php/session.php'; ?>
 </head>
 <body>
@@ -173,8 +173,12 @@
         list_video_dir('users', $user, session_is_admin());
     } else {
         preview_users();
-        list_video_dir('downloaded', null, true);
-        list_video_dir('saved', null, false);
+        if(is_dir('videos/downloaded')) {
+            list_video_dir('downloaded', null, true);
+        }
+        if(is_dir('videos/saved')) {
+            list_video_dir('saved', null, false);
+        }
     }
     if (file_exists('custom/post_index.php')) {
         require 'custom/post_index.php';

@@ -1,10 +1,10 @@
 <?php
 
-require_once 'session.php';
 require_once 'base.php';
 require_once 'database.php';
 require_once 'tokens.php';
-require_once 'accounts.php';
+require_once 'controllers/users_controller.php';
+require_once 'controllers/videos_controller.php';
 
 
 /*
@@ -31,11 +31,36 @@ add_video("videos/uploading/test.mp4", "test video");
 */
 
 function add_video($user, $filepath, $title, $description, $source) {
+    if (!preg_match('/^[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+$/', $filepath)) {
+        echo "Error: illegal filename\n";
+        die();
+    }
+    $filepath = __DIR__ . '/../videos/users/' . $user->username() . "/$filepath";
+    if(!file_exists($filepath)) {
+        echo "Error: file not found on server '$filepath' did your upload fail?\n";
+        die();
+    }
+    $ext = pathinfo($filepath, PATHINFO_EXTENSION);
+    if($ext != "mp4" && $ext != "webm") {
+        echo "Error: invalid file extension '$ext'\n";
+        die();
+    }
+
+    $hash = hash_file('sha256', $filepath);
+    $video = get_video_by_hash($hash);
+    if($video) {
+        echo "Error: this exact video was already uploaded!\n";
+        die();
+    }
+    $fileinfo = new SplFileInfo($filepath);
+    $filename = $fileinfo->getFilename();
+
     $db = get_db();
-    $stmt = $db->prepare('INSERT INTO Videos (UUID, Hash, Title, Description, Source, UserID, UploadDate, UploaderIP) VALUES (:uuid, :hash, :title, :description, :source, :user_id, :date, :ip)');
+    $stmt = $db->prepare('INSERT INTO Videos (UUID, Hash, UploadFilename, Title, Description, Source, UserID, UploadDate, UploaderIP) VALUES (:uuid, :hash, :filename, :title, :description, :source, :user_id, :date, :ip)');
     $slug_title = preg_replace('/[^a-zA-Z0-9\._-]/u', '_', $title);
     $stmt->bindValue(':uuid', guidv4(), SQLITE3_TEXT);
-    $stmt->bindValue(':hash', hash_file('sha256', $filepath), SQLITE3_TEXT);
+    $stmt->bindValue(':hash', $hash, SQLITE3_TEXT);
+    $stmt->bindValue(':filename', $filename, SQLITE3_TEXT);
     $stmt->bindValue(':title', $slug_title, SQLITE3_TEXT);
     $stmt->bindValue(':description', $description, SQLITE3_TEXT);
     $stmt->bindValue(':source', $source, SQLITE3_TEXT);
@@ -49,7 +74,7 @@ function add_video($user, $filepath, $title, $description, $source) {
 function add_video_token($username, $token, $filepath, $title, $description, $source) {
     $user = is_valid_token($username, $token);
     if(!$user) {
-        echo "invalid token";
+        echo "invalid token\n";
         die();
     }
     add_video($user, $filepath, $title, $description, $source);
@@ -61,23 +86,22 @@ if (!empty($_POST['title']) and !empty($_POST['description']))
     $description = $_POST['description'];
     $source = isset($_POST['source']) ? $_POST['source'] : '';
     if(session_user()) {
-        echo "session user found";
         $filepath = "TODO_FILE_PATH";
         add_video(session_user(), $filepath, $title, $description, $source);
     } else {
         if(empty($_POST['username']))
         {
-            echo "missing field username";
+            echo "missing field username\n";
             die();
         }
         if(empty($_POST['token']))
         {
-            echo "missing field token";
+            echo "missing field token\n";
             die();
         }
         if(empty($_POST['filepath']))
         {
-            echo "missing field filepath";
+            echo "missing field filepath\n";
             die();
         }
         $username = $_POST['username'];
@@ -89,6 +113,7 @@ if (!empty($_POST['title']) and !empty($_POST['description']))
 else
 {
 ?>
+<?php require 'navbar.php'; ?>
 
 <h1>Upload video</h1>
 <form action="add_video.php" method="post">

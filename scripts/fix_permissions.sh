@@ -12,4 +12,5 @@
 # should be run every time a user folder is added
 
 sudo chmod -R g+w videos
+sudo chmod -R u+w videos
 

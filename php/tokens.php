@@ -2,7 +2,7 @@
 
 require_once 'base.php';
 require_once 'database.php';
-require_once 'accounts.php';
+require_once 'controllers/users_controller.php';
 require_once 'session.php';
 
 function is_valid_token($username, $token) {
@@ -46,10 +46,13 @@ function generate_token($user, $name, $days_valid) {
     return $token;
 }
 
-if (!empty($_POST['name']))
-{
-    if(!session_user())
-    {
+if(($_SERVER['REQUEST_METHOD'] === 'POST') && str_ends_with($_SERVER['SCRIPT_FILENAME'], '/php/tokens.php')) {
+    if (empty($_POST['name'])) {
+        echo "Error: missing field name<br>";
+        echo '<a href="../index.php">back</a>\n';
+        die();
+    }
+    if(!session_user()) {
         echo "Error you are not logged in<br>";
         echo '<a href="../index.php">back</a>';
         die();

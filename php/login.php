@@ -1,9 +1,13 @@
 <?php
 session_start();
 
-require_once 'accounts.php';
+require_once 'controllers/users_controller.php';
 
 function render_form() {
+?>
+<?php
+require_once 'session.php';
+require 'navbar.php';
 ?>
 
 <h1>login</h1>

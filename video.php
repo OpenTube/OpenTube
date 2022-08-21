@@ -7,16 +7,20 @@
     <div class="content">
     <h1><a href="index.php">OpenTube</a></h1>
 <?php
+    require_once 'php/controllers/users_controller.php';
+    require_once 'php/controllers/videos_controller.php';
+    require_once 'php/session.php';
+
     function html_video_viewer($video_path) {
         $ext = pathinfo($video_path, PATHINFO_EXTENSION);
         $name = pathinfo($video_path, PATHINFO_FILENAME);
-        echo "<h1>$name</h1>";
         echo '<video width="1280" height="720" controls>';
         echo "<source src=\"$video_path\" type=\"video/$ext\">";
         echo '
-            Your browser does not support the video tag.
-            </video>
+        Your browser does not support the video tag.
+        </video>
         ';
+        echo "<h1>$name</h1>";
     }
     function play_video($title) {
         define('R_TITLE', '/^[a-zA-Z0-9\._-]+$/');
@@ -32,8 +36,18 @@
                 $category = $_GET['c'];
             }
         }
+        $video = null;
         if(isset($_GET['u'])) {
-            $category = 'users/' . $_GET['u'];
+            $username = $_GET['u'];
+            $category = 'users/' . $username;
+            $user = get_user_by_name($username);
+            if($user) {
+                $video = get_video_by_user_and_filename($user, $title);
+                if($video) {
+                    $video->add_view(session_user(), get_ip());
+                    $video->save();
+                }
+            }
         }
         $path = "videos/$category/$title";
         if(!is_file($path)) {
@@ -43,6 +57,9 @@
             die();
         }
         html_video_viewer($path);
+        if($video) {
+            echo "views: " . $video->views();
+        }
     }
     if(isset($_GET["t"])) {
         play_video($_GET["t"]);

@@ -46,8 +46,8 @@ function create_table($name, $handle, $schema) {
 }
 
 function create_tables($handle) {
-    $accounts_table =<<<EOF
-	CREATE TABLE IF NOT EXISTS Accounts
+    $users_table =<<<EOF
+	CREATE TABLE IF NOT EXISTS Users
 	(
 	  ID            INTEGER   PRIMARY KEY    AUTOINCREMENT,
 	  Username      TEXT,
@@ -72,17 +72,18 @@ function create_tables($handle) {
     $videos_table =<<<EOF
 	CREATE TABLE IF NOT EXISTS Videos
 	(
-	  ID            INTEGER   PRIMARY KEY    AUTOINCREMENT,
-	  UUID          TEXT,
-	  Hash          TEXT,
-	  Title         TEXT,
-	  Description   TEXT,
-	  Source        TEXT,
-	  Views         INTEGER   DEFAULT 0,
-	  Deleted       INTEGER   DEFAULT 0,
-	  UserID        INTEGER,
-	  UploadDate    TEXT,
-	  UploaderIP    TEXT
+	  ID             INTEGER   PRIMARY KEY    AUTOINCREMENT,
+	  UUID           TEXT,
+	  Hash           TEXT,
+	  UploadFilename TEXT,
+	  Title          TEXT,
+	  Description    TEXT,
+	  Source         TEXT,
+	  Views          INTEGER   DEFAULT 0,
+	  Deleted        INTEGER   DEFAULT 0,
+	  UserID         INTEGER,
+	  UploadDate     TEXT,
+	  UploaderIP     TEXT
 	);
 	EOF;
     $tokens_table =<<<EOF
@@ -101,9 +102,20 @@ function create_tables($handle) {
 	  IssuerIP      TEXT
 	);
 	EOF;
+    $views_table =<<<EOF
+	CREATE TABLE IF NOT EXISTS Views
+	(
+	  ID            INTEGER   PRIMARY KEY    AUTOINCREMENT,
+	  VideoID       INTEGER,
+	  UserID        INTEGER,
+	  Date          TEXT,
+	  ViewerIP      TEXT
+	);
+	EOF;
     create_table("tokens", $handle, $tokens_table);
-    create_table("accounts", $handle, $accounts_table);
+    create_table("users", $handle, $users_table);
     create_table("videos", $handle, $videos_table);
+    create_table("views", $handle, $views_table);
 }
 
 function connect_db() {
