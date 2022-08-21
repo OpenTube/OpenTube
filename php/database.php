@@ -75,16 +75,33 @@ function create_tables($handle) {
 	  ID            INTEGER   PRIMARY KEY    AUTOINCREMENT,
 	  UUID          TEXT,
 	  Hash          TEXT,
-	  Description   TEXT,
 	  Title         TEXT,
+	  Description   TEXT,
 	  Source        TEXT,
-	  Views         INTEGER,
-	  Deleted       INTEGER,
+	  Views         INTEGER   DEFAULT 0,
+	  Deleted       INTEGER   DEFAULT 0,
 	  UserID        INTEGER,
 	  UploadDate    TEXT,
 	  UploaderIP    TEXT
 	);
 	EOF;
+    $tokens_table =<<<EOF
+	CREATE TABLE IF NOT EXISTS Tokens
+	(
+	  ID            INTEGER   PRIMARY KEY    AUTOINCREMENT,
+	  UUID          TEXT,
+	  Title         TEXT,
+	  Username      TEXT,
+	  UserID        INTEGER,
+	  AccessUpload  INTEGER   DEFAULT 0,
+	  AccessDelete  INTEGER   DEFAULT 0,
+	  AccessEdit    INTEGER   DEFAULT 0,
+	  ExpireDate    TEXT,
+	  IssueDate     TEXT,
+	  IssuerIP      TEXT
+	);
+	EOF;
+    create_table("tokens", $handle, $tokens_table);
     create_table("accounts", $handle, $accounts_table);
     create_table("videos", $handle, $videos_table);
 }

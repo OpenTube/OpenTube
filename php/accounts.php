@@ -1,6 +1,7 @@
 <?php
 
 require_once 'database.php';
+require_once 'base.php';
 
 class User {
     public $id;
@@ -33,15 +34,18 @@ class User {
     }
 }
 
+function get_ip() {
+    return isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'invalid';
+}
+
 function create_user($username, $password) {
     $db = get_db();
-    date_default_timezone_set("Europe/Berlin");
     $stmt = $db->prepare('INSERT INTO Accounts (Username, Password, Admin, RegisterDate, RegisterIP) VALUES (:username, :password, :admin, :register_date, :register_ip);');
     $stmt->bindValue(':username', $username);
     $stmt->bindValue(':password', $password);
     $stmt->bindValue(':admin', 1);
-    $stmt->bindValue(':register_date', date('d/m/Y H:i'));
-    $ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'invalid';
+    $stmt->bindValue(':register_date', get_date_str());
+    $ip = get_ip();
     $stmt->bindValue(':register_ip', $ip);
     $res = $stmt->execute();
     if(!$res) {

@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+require_once 'base.php';
 require_once 'accounts.php';
 
 function render_form() {
@@ -19,7 +20,7 @@ Want a admin account? Run this in your terminal:
 
 <code style="white-space: pre;">
 sqlite3 db/opentube.db
-INSERT INTO Accounts (Username, Password, Admin, RegisterDate, RegisterIP) VALUES ("admin", "admin", 1, "<?php date_default_timezone_set("Europe/Berlin");echo date('d/m/Y H:i'); ?>", "<?php echo isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'invalid'; ?>");
+INSERT INTO Accounts (Username, Password, Admin, RegisterDate, RegisterIP) VALUES ("admin", "admin", 1, "<?php echo get_date_str(); ?>", "<?php echo get_ip(); ?>");
 </code>
 
 <?php
