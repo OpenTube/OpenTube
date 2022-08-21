@@ -4,6 +4,7 @@ require_once 'base.php';
 require_once 'database.php';
 require_once 'controllers/users_controller.php';
 require_once 'session.php';
+require_once 'polyfill.php';
 
 function is_valid_token($username, $token) {
     $db = get_db();

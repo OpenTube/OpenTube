@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <?php require 'php/header.php'; ?>
-<?php require 'php/controllers/users_controller.php'; ?>
-<?php require 'php/session.php'; ?>
+<?php require_once 'php/controllers/users_controller.php'; ?>
+<?php require_once 'php/session.php'; ?>
+<?php require_once 'php/polyfill.php'; ?>
 </head>
 <body>
     <div class="content">
