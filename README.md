@@ -4,8 +4,9 @@ Basic video streaming platform. Simple php website to watch videos.
 ### Dependencys
 
         apt install php ffmpeg
-        curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
-        chmod a+rx /usr/local/bin/youtube-dl
+        sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
+        sudo chmod a+rx /usr/local/bin/yt-dlp
+
 
 ### Setup
 
@@ -15,7 +16,7 @@ Basic video streaming platform. Simple php website to watch videos.
 generate video folder and download sample video
 
         mkdir -p videos/{saved,downloaded,unlisted} && cd videos/saved/
-        youtube-dl -f mp4 https://www.youtube.com/watch?v=2r1D-sXTVTo
+        yt-dlp -f mp4 https://www.youtube.com/watch?v=2r1D-sXTVTo
 
 generate thumbnails using ffmpeg
 has to be run after adding new videos

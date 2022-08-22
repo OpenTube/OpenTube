@@ -31,7 +31,7 @@ jobs:
           shellcheck \
           python3-dev python3-pip python3-wheel python3-setuptools \
           openjdk-8-jdk openjdk-8-jre ffmpeg -y
-        sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
-        sudo chmod a+rx /usr/local/bin/youtube-dl
+        sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
+        sudo chmod a+rx /usr/local/bin/yt-dlp
     - run: ./dev.sh install
     - run: PATH="$PATH:$HOME/.local/bin" TERM=screen-256color ./dev.sh test

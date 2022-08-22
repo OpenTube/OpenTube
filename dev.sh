@@ -22,12 +22,12 @@ function check_deps() {
         fi
         python3 -m pip install html5validator
     fi
-    # youtube-dl
-    if [ ! -x "$(command -v youtube-dl)" ]
+    # yt-dlp (youtube-dl fork)
+    if [ ! -x "$(command -v yt-dlp)" ]
     then
-        echo "Error: you need youtube-dl installed"
-        echo "  curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl"
-        echo "  chmod a+rx /usr/local/bin/youtube-dl"
+        echo "Error: you need yt-dlp (youtube-dl fork) installed"
+        echo "  sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp"
+        echo "  sudo chmod a+rx /usr/local/bin/yt-dlp"
         exit 1
     fi
 }
@@ -135,8 +135,8 @@ function test_dl_videos() {
     mkdir -p videos/saved
     (
         cd videos/saved || exit 1
-        youtube-dl --quiet https://www.youtube.com/watch?v=tPEE9ZwTmy0
-        youtube-dl --quiet https://www.youtube.com/watch?v=YDiZB42z3TM
+        yt-dlp --quiet https://www.youtube.com/watch?v=tPEE9ZwTmy0
+        yt-dlp --quiet https://www.youtube.com/watch?v=YDiZB42z3TM
     ) || exit 1
 }
 
