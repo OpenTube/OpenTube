@@ -29,7 +29,7 @@ webgroup="$(getent group | cut -d: -f1 | grep -E '^(www-data|http)$' | tail -n 1
 
 if [ "$USER" == "" ]
 then
-	echo 'Error: $USER variable not set'
+	echo $'Error: $USER variable not set'
 	exit 1
 fi
 
