@@ -60,8 +60,6 @@ function slug_video() {
 	filename_slug="$filename_slug.$ext"
 	if [ "$filename" != "$filename_slug" ]
 	then
-		echo "$filename"
-		echo "$filename_slug"
 		printf '\033[1m"\033[0m%s\033[1m" -> "\033[0m%s\033[1m"\033[0m\n' \
 			"$(f_chomp "$filename")" "$(f_chomp "$filename_slug")"
 		filename_slug="$path/$filename_slug"
