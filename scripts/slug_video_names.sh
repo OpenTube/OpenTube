@@ -39,6 +39,18 @@ function save_mv() {
 	mv "$src" "$dst" || exit 1
 }
 
+function _slug_file() {
+	local filename="$1"
+	local ext
+	local filename_no_ext
+	local filename_slug
+	ext="${filename##*.}"             # cut off extension to slug dots
+	filename_no_ext="${filename%.*}"  # cut off extension to slug dots
+	filename_slug="${filename_no_ext//[^a-zA-Z0-9_-]/_}"
+	filename_slug="$filename_slug.$ext"
+	echo "$filename_slug"
+}
+
 function slug_video() {
 	local filename="$1"
 	local path
@@ -54,10 +66,7 @@ function slug_video() {
 	local ext
 	path="$(dirname "$filename")"
 	filename="$(basename "$filename")"
-	ext="${filename##*.}"      # cut off extension to slug dots
-	filename_no_ext="${filename%.*}"  # cut off extension to slug dots
-	filename_slug="${filename_no_ext//[^a-zA-Z0-9_-]/_}"
-	filename_slug="$filename_slug.$ext"
+	filename_slug="$(_slug_file "$filename")"
 	if [ "$filename" != "$filename_slug" ]
 	then
 		printf '\033[1m"\033[0m%s\033[1m" -> "\033[0m%s\033[1m"\033[0m\n' \
