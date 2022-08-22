@@ -1,5 +1,9 @@
 <?php
 
+const MAX_USERNAME_LEN = 32;
+const MIN_PASSWORD_LEN = 3;
+const MAX_PASSWORD_LEN = 2048;
+
 class User {
     private $id;
     private $username;

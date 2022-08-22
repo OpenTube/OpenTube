@@ -9,6 +9,26 @@ function get_ip() {
 }
 
 function create_user($username, $password) {
+    if(strlen($username) > MAX_USERNAME_LEN) {
+        echo "Error: username too long (max: " . MAX_USERNAME_LEN . ").";
+        echo '<a href="register.php">back</a>';
+        die();
+    }
+    if(strlen($password) > MAX_PASSWORD_LEN) {
+        echo "Error: password too long (max: " . MAX_PASSWORD_LEN . ").";
+        echo '<a href="register.php">back</a>';
+        die();
+    }
+    if(strlen($password) < MIN_PASSWORD_LEN) {
+        echo "Error: password too short (min: " . MIN_PASSWORD_LEN . ").";
+        echo '<a href="register.php">back</a>';
+        die();
+    }
+    if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
+        echo "Error: username can only include numbers, letters and underscores.";
+        echo '<a href="register.php">back</a>';
+        die();
+    }
     $user = get_user_by_name($username);
     if ($user) {
         echo "Error: username already in use.";
