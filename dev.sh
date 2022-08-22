@@ -160,6 +160,24 @@ function test_slug() {
 		find videos/saved/ -type f -printf "%f\\n" | grep --color=auto '[^a-zA-Z0-9\._-]'
 		exit 1
 	fi
+	touch "videos/saved/slug me daddy ÜwÜ.mp4"
+	touch "videos/saved/slug me daddy ÜwÜ.webm"
+	touch "videos/saved/slug.. me.webm"
+	bash -e ./scripts/slug_video_names.sh
+	local got
+	local expected
+	got="$(find videos/saved/ -name "slug*" | LC_ALL=C sort)"
+	read -r -d '' expected <<-EOF
+	videos/saved/slug___me.webm
+	videos/saved/slug_me_daddy__w_.mp4
+	videos/saved/slug_me_daddy__w_.webm
+	EOF
+	if [ "$got" != "$expected" ]
+	then
+		err "ERROR: unexpected slugged video names:"
+		diff <(echo "$got") <(echo "$expected")
+		exit 1
+	fi
 }
 
 function run_tests() {
