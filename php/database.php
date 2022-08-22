@@ -52,7 +52,7 @@ function create_tables($handle) {
 	  ID            INTEGER   PRIMARY KEY    AUTOINCREMENT,
 	  Username      TEXT,
 	  Password      TEXT,
-	  Admin         INTEGER,
+	  Admin         INTEGER   DEFAULT 0,
 	  RegisterDate  TEXT,
 	  RegisterIP    TEXT
 	);

@@ -39,7 +39,7 @@ function create_user($username, $password) {
     $stmt = $db->prepare('INSERT INTO Users (Username, Password, Admin, RegisterDate, RegisterIP) VALUES (:username, :password, :admin, :register_date, :register_ip);');
     $stmt->bindValue(':username', $username);
     $stmt->bindValue(':password', $password);
-    $stmt->bindValue(':admin', 1);
+    $stmt->bindValue(':admin', 0);
     $stmt->bindValue(':register_date', get_date_str());
     $ip = get_ip();
     $stmt->bindValue(':register_ip', $ip);
