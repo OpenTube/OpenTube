@@ -135,8 +135,8 @@ function test_dl_videos() {
 	mkdir -p videos/saved
 	(
 		cd videos/saved || exit 1
-		yt-dlp --quiet https://www.youtube.com/watch?v=tPEE9ZwTmy0
-		yt-dlp --quiet https://www.youtube.com/watch?v=YDiZB42z3TM
+		yt-dlp --quiet -f mp4 https://www.youtube.com/watch?v=tPEE9ZwTmy0
+		yt-dlp --quiet -f webm https://www.youtube.com/watch?v=YDiZB42z3TM
 	) || exit 1
 }
 
