@@ -60,17 +60,22 @@
             </video>
         ';
     }
+    function delete_video_button($video, $user) {
+        $page = isset($_GET['p']) ? (int)$_GET['p'] : 0;
+        $per_page = isset($_GET['pp']) ? (int)$_GET['pp'] : 5;
+        echo "<br><a href=\"edit.php?delete=$video&u=$user&p=$page&pp=$per_page\">DELETE</a><br>";
+    }
     function html_video_buttons($video, $user) {
         if ($user) {
             html_user_video_buttons($video, $user);
             return;
         }
         // downloads dir buttons:
-        echo "<br><a href=\"edit.php?delete=$video\">DELETE</a><br>";
+        delete_video_button($video, $user);
         echo "<br><a href=\"edit.php?save=$video\">SAVE</a><br>";
     }
     function html_user_video_buttons($video, $user) {
-        echo "<br><a href=\"edit.php?u=$user&delete=$video\">DELETE</a><br>";
+        delete_video_button($video, $user);
     }
     function html_video($video, $category, $user, $editable) {
         echo '<div class="video-container">';

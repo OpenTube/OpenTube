@@ -71,7 +71,14 @@
             save_video($_GET['save'], $user);
         }
     }
-    echo '<br><a href="index.php">Okay</a><br>';
+    $user = isset($_GET['u']) ? $_GET['u'] : null;
+    $page = isset($_GET['p']) ? (int)$_GET['p'] : 0;
+    $per_page = isset($_GET['pp']) ? (int)$_GET['pp'] : 5;
+    if($user) {
+        echo '<br><a href="index.php' . "?u=$user&p=$page&pp=$per_page" . '">Okay</a><br>';
+    } else {
+        echo '<br><a href="index.php' . "?p=$page&pp=$per_page" . '">Okay</a><br>';
+    }
 ?>
     </div> <!-- .content -->
     <div>
