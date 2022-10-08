@@ -1,12 +1,20 @@
 #!/bin/bash
 
 # RESOLUTION=320x240 # 4:3
-RESOLUTION=320x180 # 16:9
+WIDTH=329
+HEIGHT=180
+# RESOLUTION=${WIDTH}x$HEIGHT # 16:9
 
 if [ ! -f index.php ] || [ ! -f video.php ]
 then
-    echo "Error make sure to be in the opentube root dir"
-    exit 1
+	echo "Error make sure to be in the opentube root dir"
+	exit 1
+fi
+
+if [ ! -x "$(command -v ruby)" ]
+then
+	echo "Error: you need ruby installed on your system"
+	exit 1
 fi
 
 arg_force=0
@@ -33,9 +41,47 @@ done
 
 mkdir -p thumbnails
 
+function get_scaled_res() {
+	local video_path="$1"
+	local w
+	local h
+	local res
+	local sw
+	local sh
+	local scaled_res
+	res="$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 "$video_path")"
+	w="$(echo "$res" | cut -d'x' -f1)"
+	h="$(echo "$res" | cut -d'x' -f2)"
+	scaled_res="${w}x$h"
+	if [ "$WIDTH" -gt "$HEIGHT" ]
+	then
+		if [ "$w" -gt "$h" ]
+		then
+			# if wanted res is landscape
+			# and video is also landscape
+			# keep the resolution should only stretch a little bit
+			test
+		else
+			# if wanted res is landscape
+			# and video is portrait
+			# scale the video to use max height
+			# todo: get rid of ruby depdency
+			sw="$(echo "puts (($HEIGHT.to_f / $h) * $w).to_i" | ruby)"
+			sh="$HEIGHT"
+			scaled_res="${sw}x$sh"
+		fi
+	else
+		echo "TODO: implement portrait"
+		exit 1
+	fi
+	echo "$scaled_res"
+}
+
 function generate_thumbnail_static() {
 	local video_path="$1"
 	local png_path="$2"
+	local seconds
+	local second
 	seconds="$(ffprobe \
 		-v error \
 		-show_entries format=duration \
@@ -51,12 +97,13 @@ function generate_thumbnail_static() {
 	second="$((seconds/2))"
 	# 1 or 0 second long videos should be 0.1 not 0
 	second="$second.1"
+
 	ffmpeg \
 		-y \
 		-ss "$second" \
 		-i "$video_path" \
 		-t 1 \
-		-s "$RESOLUTION" \
+		-s "$(get_scaled_res "$video_path")" \
 		-f image2 \
 		-frames:v 1 \
 		"$png_path"
@@ -72,7 +119,7 @@ function generate_thumbnail() {
         -ss 00:00:00.000 \
         -pix_fmt rgb24 \
         -r 10 \
-        -s "$RESOLUTION" \
+	-s "$(get_scaled_res "$video_path")" \
         -t 00:00:10.000 \
         "$gif_path"
 }
