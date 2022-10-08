@@ -34,27 +34,33 @@ done
 mkdir -p thumbnails
 
 function generate_thumbnail_static() {
-    local video_path="$1"
-    local png_path="$2"
-    seconds="$(ffprobe \
-        -v error \
-        -show_entries format=duration \
-        -of default=noprint_wrappers=1:nokey=1 \
-        "$video_path" \
-        | cut -d'.' -f1)"
-    second="$((seconds/2))"
-    # 1 or 0 second long videos should be 0.1 not 0
-    second="$second.1"
-    ffmpeg \
-        -y \
-        -ss "$second" \
-        -i "$video_path" \
-        -t 1 \
-        -s "$RESOLUTION" \
-        -f image2 \
-        -frames:v 1 \
-        "$png_path"
-    # echo "seconds: '$seconds' second: '$second' $video_path"
+	local video_path="$1"
+	local png_path="$2"
+	seconds="$(ffprobe \
+		-v error \
+		-show_entries format=duration \
+		-of default=noprint_wrappers=1:nokey=1 \
+		"$video_path" \
+		| cut -d'.' -f1)"
+	((seconds/2)) &>/dev/null || {
+		echo "Error: failed to get video middle (seconds/2)";
+		echo "       seconds=$seconds"
+		echo "       $video_path";
+		exit 1;
+	}
+	second="$((seconds/2))"
+	# 1 or 0 second long videos should be 0.1 not 0
+	second="$second.1"
+	ffmpeg \
+		-y \
+		-ss "$second" \
+		-i "$video_path" \
+		-t 1 \
+		-s "$RESOLUTION" \
+		-f image2 \
+		-frames:v 1 \
+		"$png_path"
+	# echo "seconds: '$seconds' second: '$second' $video_path"
 }
 
 function generate_thumbnail() {
