@@ -61,6 +61,14 @@ if(($_SERVER['REQUEST_METHOD'] === 'POST') && str_ends_with($_SERVER['SCRIPT_FIL
     $user = session_user();
     $token = generate_token($user, $_POST['name'], 90);
     echo "generated token: $token<br>";
+?>
+    <pre>
+        <code>
+            mkdir -p ~/.config/crools
+            echo "OPENTUBE_TOKEN='<?php echo $token ?>'" >> ~/.config/crools/opentube.env
+        </code>
+    </pre>
+<?php
     echo '<a href="../index.php">okay</a>';
 }
 ?>
