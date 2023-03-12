@@ -74,7 +74,7 @@ function add_video($user, $filepath, $title, $description, $source) {
 function add_video_token($username, $token, $filepath, $title, $description, $source) {
     $user = is_valid_token($username, $token);
     if(!$user) {
-        echo "invalid token\n";
+        echo "invalid token";
         die();
     }
     add_video($user, $filepath, $title, $description, $source);
