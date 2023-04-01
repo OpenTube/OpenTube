@@ -31,6 +31,9 @@ document.addEventListener('keydown', (event) => {
   }
   if (event.key === 'n' || event.key === 'N') {
     const lastPage = parseInt(document.querySelector('.pages a:last-child').innerHTML, 10)
+    if (newPage === NaN) {
+      newPage = 1
+    }
     if (newPage < 0) {
       newPage = 0
     }
