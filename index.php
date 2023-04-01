@@ -161,7 +161,7 @@
         $num_users = 0;
         echo '<div class="users">';
         foreach ($user_dir as $fileinfo) {
-            if (++$num_users > 15) {
+            if (++$num_users > 150) {
                 break;
             }
             if ($fileinfo->isDir() && !$fileinfo->isDot()) {
