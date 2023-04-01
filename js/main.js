@@ -18,3 +18,28 @@ document.querySelectorAll('video').forEach((video) => {
     e.target.setAttribute('poster', hoverThumbnail)
   })
 })
+
+document.addEventListener('keydown', (event) => {
+  const params = new URLSearchParams(document.location.search)
+  console.log(params)
+  let newPage = 0
+  if (event.key === 'n') {
+    newPage = parseInt(params.get('p'), 10) + 1
+  }
+  if (event.key === 'N') { // event.shiftKey
+    newPage = parseInt(params.get('p'), 10) - 1
+  }
+  if (event.key === 'n' || event.key === 'N') {
+    const lastPage = parseInt(document.querySelector('.pages a:last-child').innerHTML, 10)
+    if (newPage < 0) {
+      newPage = 0
+    }
+    if (newPage >= lastPage) {
+      newPage = lastPage
+    }
+    params.set('p', newPage)
+    const newUrl = document.location.toString().split('?')[0] + '?' + params.toString()
+    console.log(newUrl)
+    window.location = newUrl
+  }
+})
