@@ -52,7 +52,14 @@ function run_app() {
 		do
 			printf "  %s\\n" "$(ps o cmd -p "$proc" | tail -n1)"
 		done
-		exit 1
+		local yn
+		echo "do you want to continue? [y/N]"
+		read -r -n 1 yn
+		if ! [[ "$yn" =~ [yY] ]]
+		then
+			echo "aborting ..."
+			exit 1
+		fi
 	fi
 	if [[ ! -d .git ]] || [[ ! -f index.php ]]
 	then
