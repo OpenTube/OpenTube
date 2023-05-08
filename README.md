@@ -45,6 +45,9 @@ You can prepend or append to the landing page via ``custom/pre_index.php`` and `
 
 The custom html header can be edited at ``custom/header.php``
 
+Specify your own search term mappings in ``custom/search.csv`` check the example at ``data/search.csv``
+it allows you to show search results for 'terminal' when the user typed in 'console'
+
 ### License
 
 The whole code base and all images are licensed under public domain.
