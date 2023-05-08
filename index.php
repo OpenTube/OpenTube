@@ -171,6 +171,25 @@
         }
         echo '</div>';
     }
+    function list_videos_from_all_users() {
+        $users_path = 'videos/users';
+        if (!is_dir($users_path)) {
+            mkdir($users_path, 0777, true);
+            return;
+        }
+        $user_dir = new DirectoryIterator($users_path);
+        $num_users = 0;
+        foreach ($user_dir as $fileinfo) {
+            if (++$num_users > 150) {
+                break;
+            }
+            if ($fileinfo->isDir() && !$fileinfo->isDot()) {
+                $user = $fileinfo->getFilename();
+                echo '  <h2 href="index.php?u=' . $user . '">' . $user . '</h2>';
+                list_video_dir('users', $user, session_is_admin());
+            }
+        }
+    }
     if (isset($_GET['u'])) {
         $user = $_GET['u'];
         echo '<div class="user-banner">';
@@ -179,6 +198,14 @@
         list_video_dir('users', $user, session_is_admin());
     } else {
         preview_users();
+        // when searching on the index page
+        // show all users and all their matched videos
+        // with all of them having their own pagination
+        // this is kinda weird but also works so refactor maybe
+        // when we got a database until then it works okayish
+        if (isset($_GET['s'])) {
+            list_videos_from_all_users();
+        }
         if(is_dir('videos/downloaded')) {
             list_video_dir('downloaded', null, true);
         }
