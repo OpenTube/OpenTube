@@ -185,7 +185,7 @@
             }
             if ($fileinfo->isDir() && !$fileinfo->isDot()) {
                 $user = $fileinfo->getFilename();
-                echo '  <h2 href="index.php?u=' . $user . '">' . $user . '</h2>';
+                echo '<hr><div><a href="index.php?u=' . $user . '" class="user">' . $user . '</a></div>';
                 list_video_dir('users', $user, session_is_admin());
             }
         }
