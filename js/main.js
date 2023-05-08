@@ -20,6 +20,10 @@ document.querySelectorAll('video').forEach((video) => {
 })
 
 document.addEventListener('keydown', (event) => {
+  if (event.target.type === 'text') {
+    // no key bindings in input fields
+    return
+  }
   const params = new URLSearchParams(document.location.search)
   console.log(params)
   let newPage = 0
