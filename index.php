@@ -105,10 +105,14 @@
                     continue;
                 }
                 $search_hit = false;
-                foreach (get_search_group($search) as $search_term) {
-                    if ($search_term && str_contains(strtolower(pathinfo($entry, PATHINFO_FILENAME)), $search_term)) {
-                        $search_hit = true;
-                        break;
+                if ($search && str_contains(strtolower(pathinfo($entry, PATHINFO_FILENAME)), $search)) {
+                    $search_hit= true;
+                } else {
+                    foreach (get_search_group($search) as $search_term) {
+                        if ($search_term && str_contains(strtolower(pathinfo($entry, PATHINFO_FILENAME)), $search_term)) {
+                            $search_hit = true;
+                            break;
+                        }
                     }
                 }
                 if ($search && !$search_hit) {
