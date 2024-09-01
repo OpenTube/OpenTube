@@ -27,6 +27,23 @@ document.addEventListener('keydown', (event) => {
   const params = new URLSearchParams(document.location.search)
   console.log(params)
   let newPage = 0
+  if (event.key === 'f') {
+    const videoDom = document.querySelector('.video-main')
+    if(videoDom) {
+      if(videoDom.classList.contains('fullscreen')) {
+        document.exitFullscreen()
+      } else {
+        if (videoDom.requestFullscreen) {
+          videoDom.requestFullscreen()
+        } else if (videoDom.webkitRequestFullscreen) {
+          videoDom.webkitRequestFullscreen()
+        } else if (videoDom.msRequestFullScreen) {
+          videoDom.msRequestFullScreen()
+        }
+      }
+      videoDom.classList.toggle('fullscreen')
+    }
+  }
   if (event.key === 'n') {
     newPage = parseInt(params.get('p'), 10) + 1
   }

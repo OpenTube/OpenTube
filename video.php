@@ -14,7 +14,7 @@
     function html_video_viewer($video_path) {
         $ext = pathinfo($video_path, PATHINFO_EXTENSION);
         $name = pathinfo($video_path, PATHINFO_FILENAME);
-        echo '<video width="1280" height="720" controls>';
+        echo '<video width="1280" height="720" controls class="video-main">';
         echo "<source src=\"$video_path\" type=\"video/$ext\">";
         echo '
         Your browser does not support the video tag.
