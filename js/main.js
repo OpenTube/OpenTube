@@ -30,7 +30,7 @@ document.addEventListener('keydown', (event) => {
   if (event.key === 'f') {
     const videoDom = document.querySelector('.video-main')
     if(videoDom) {
-      if(videoDom.classList.contains('fullscreen')) {
+      if(document.fullscreen) {
         document.exitFullscreen()
       } else {
         if (videoDom.requestFullscreen) {
@@ -41,7 +41,6 @@ document.addEventListener('keydown', (event) => {
           videoDom.msRequestFullScreen()
         }
       }
-      videoDom.classList.toggle('fullscreen')
     }
   }
   if (event.key === 'n') {
