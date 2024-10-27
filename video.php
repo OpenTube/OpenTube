@@ -39,6 +39,15 @@
         $video = null;
         if(isset($_GET['u'])) {
             $username = $_GET['u'];
+
+            define('R_USERNAME', '/^[a-zA-Z0-9_]+$/');
+            if(!preg_match(R_USERNAME, $username)) {
+                echo "<br>ERROR INVALID USERNAME'$title'<br>";
+                echo '<br><a href="index.php">Okay</a><br>';
+                http_response_code(400);
+                die();
+            }
+
             $category = 'users/' . $username;
             $user = get_user_by_name($username);
             if($user) {
