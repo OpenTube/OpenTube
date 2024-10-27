@@ -49,6 +49,12 @@
                 }
             }
         }
+        if(str_contains($category, '.')) {
+            echo "<br>CATEGORY CAN NOT CONTAIN DOTS<br>";
+            echo '<br><a href="index.php">Okay</a><br>';
+            http_response_code(400);
+            die();
+        }
         $path = "videos/$category/$title";
         if(!is_file($path)) {
             echo "<br>ERROR VIDEO NOT FOUND<br>";
