@@ -65,7 +65,6 @@ class Video {
         $diff = $now - $last_view;
         // only count views if at least 5min passed since last
         if($diff > 60 * 5) {
-            echo "$diff";
             $this->presist_view($user, $ip);
         }
     }
