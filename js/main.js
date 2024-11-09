@@ -29,8 +29,8 @@ document.addEventListener('keydown', (event) => {
   let newPage = 0
   if (event.key === 'f') {
     const videoDom = document.querySelector('.video-main')
-    if(videoDom) {
-      if(document.fullscreen) {
+    if (videoDom) {
+      if (document.fullscreen) {
         document.exitFullscreen()
       } else {
         if (videoDom.requestFullscreen) {
