@@ -9,7 +9,7 @@
 #
 #  DELETE FROM Tokens;
 #
-# But in the feature there should be a admin token that can access
+# But in the future there should be a admin token that can access
 # data from other users
 # and this token can then be used by the script
 
