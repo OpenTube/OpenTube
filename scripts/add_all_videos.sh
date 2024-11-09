@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -u
+
 OPENTUBE_TOKEN="$(cat /proc/sys/kernel/random/uuid)"
 
 get_id_by_username() {
@@ -49,7 +51,7 @@ do
 	do
 		[[ -f "$filepath" ]] || continue
 
-		title="$(basename "$filename" .mp4)"
+		title="$(basename "$filepath" .mp4)"
 		filename="$(basename "$filepath")"
 		[[ "$filename" = "" ]] && { echo "[-] Error: filename empty. (path: $filepath)"; exit 1; }
 		[[ "$title" = "" ]]    && { echo "[-] Error: title empty. (path: $filepath)"; exit 1; }
