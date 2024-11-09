@@ -51,6 +51,9 @@ do
 
 		title="$(basename "$filename" .mp4)"
 		filename="$(basename "$filepath")"
+		[[ "$filename" = "" ]] && { echo "[-] Error: filename empty. (path: $filepath)"; exit 1; }
+		[[ "$title" = "" ]]    && { echo "[-] Error: title empty. (path: $filepath)"; exit 1; }
+
 		echo "[$username] $title"
 		curl 'http://localhost/OpenTube/php/add_video.php' \
 			-X POST \
