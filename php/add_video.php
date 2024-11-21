@@ -52,6 +52,13 @@ function add_video($user, $filepath, $title, $description, $source) {
         echo "Error: this exact video was already uploaded!\n";
         die();
     }
+
+    $video = get_video_by_user_and_filename($user, $title);
+    if($video) {
+        echo "Error: video with that filename already exists in the database!\n";
+        die();
+    }
+
     $fileinfo = new SplFileInfo($filepath);
     $filename = $fileinfo->getFilename();
 
