@@ -93,11 +93,12 @@ class Video {
 
     function save() {
         $db = get_db();
-        $stmt = $db->prepare('UPDATE Videos SET Hash = :hash, Title = :title, Description = :description, Views = :views');
+        $stmt = $db->prepare('UPDATE Videos SET Hash = :hash, Title = :title, Description = :description, Views = :views WHERE ID = :id');
         $stmt->bindValue(':hash', $this->hash);
         $stmt->bindValue(':title', $this->title);
         $stmt->bindValue(':description', $this->description);
         $stmt->bindValue(':views', $this->views);
+        $stmt->bindValue(':id', $this->id);
         $stmt->execute();
     }
 }
