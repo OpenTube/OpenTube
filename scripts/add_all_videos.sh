@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -u
+set -ueo pipefail
 
 OPENTUBE_TOKEN="$(cat /proc/sys/kernel/random/uuid)"
 
