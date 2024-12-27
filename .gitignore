@@ -5,6 +5,7 @@
 *.db
 *.sqlite
 *.sqlite3
+db/
 thumbnails
 tags
 vendor/
