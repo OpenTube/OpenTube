@@ -38,9 +38,13 @@ add_tmp_token_for_user() {
 	sqlite3 db/opentube.db < <(insert_token_query "$username")
 }
 
-for user_path in videos/users/*/
-do
-	[[ -d "$user_path" ]] || continue
+add_videos_for_user() {
+	local user_path="$1"
+	if [[ ! -d "$user_path" ]]
+	then
+		echo "Error: folder '$user_path' not found";
+		exit 1
+	fi
 
 	username="$(basename "$user_path")"
 
@@ -62,7 +66,33 @@ do
 			-H 'Content-Type: application/x-www-form-urlencoded' \
 			--data-raw "title=$title&description=todo&filepath=$filename&token=$OPENTUBE_TOKEN&username=$username"
 	done
+}
+
+for arg in "$@"
+do
+	if [ "$arg" = "--help" ] || [ "$arg" = "-h" ]
+	then
+		echo "usage: ./scripts/add_all_videos.sh [USER..]"
+		echo "description:"
+		echo "  does all users by default"
+		echo "  takes optionally n users"
+		echo ""
+		echo "  adds the videos in the users directory to the database"
+		echo "  if they are not in it already"
+		exit 0
+	fi
+	add_videos_for_user videos/users/"$arg"/
 done
+
+if [ "$#" = 0 ]
+then
+	for user_path in videos/users/*/
+	do
+		[[ -d "$user_path" ]] || continue
+
+		add_videos_for_user "$user_path"
+	done
+fi
 
 echo "[done] cleaning up tmp tokens ..."
 cleanup_tmp_tokens
