@@ -51,8 +51,13 @@ add_videos_for_user() {
 	echo "[$username] generating tmp token $OPENTUBE_TOKEN ..."
 	add_tmp_token_for_user "$username"
 
+	files=("$user_path"*.mp4)
+	num_files="${#files}"
+	num_file=0
+
 	for filepath in "$user_path"*.mp4
 	do
+		num_file=$((num_file+1))
 		[[ -f "$filepath" ]] || continue
 
 		title="$(basename "$filepath" .mp4)"
@@ -60,7 +65,7 @@ add_videos_for_user() {
 		[[ "$filename" = "" ]] && { echo "[-] Error: filename empty. (path: $filepath)"; exit 1; }
 		[[ "$title" = "" ]]    && { echo "[-] Error: title empty. (path: $filepath)"; exit 1; }
 
-		echo "[$username] $title"
+		echo "[$num_file/$num_files][$username] $title"
 		curl 'http://localhost/OpenTube/php/add_video.php' \
 			-X POST \
 			-H 'Content-Type: application/x-www-form-urlencoded' \
