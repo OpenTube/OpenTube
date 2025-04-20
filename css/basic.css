@@ -71,6 +71,11 @@ body {
     background-color: rgb(173, 43, 142);
 }
 
+video {
+    width: 100%;
+    height: auto   !important;
+}
+
 a:link.user, a:visited.user, a:hover.user, a:hover.user {
     color: rgb(67, 153, 202);
     text-decoration: none;
