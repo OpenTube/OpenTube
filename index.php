@@ -95,6 +95,10 @@
         $page = isset($_GET['p']) ? (int)$_GET['p'] : 0;
         $per_page = isset($_GET['pp']) ? (int)$_GET['pp'] : 5;
         $search = isset($_GET['s']) ? strtolower($_GET['s']) : false;
+        if ($search) {
+            // slug search spaces because video titles should be slugged too
+            $search = str_replace(" ", "_", $search);
+        }
         $total_videos = 0;
         if ($handle = opendir($dir)) {
             while (false !== ($entry = readdir($handle))) {
